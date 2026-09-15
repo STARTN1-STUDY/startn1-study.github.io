@@ -1,0 +1,668 @@
+<meta name="robots" content="noindex,nofollow">
+<title>N1 Específica 19/09</title>
+<style>
+:root{
+  --azul:#12233f; --azul2:#1d4e89; --verde:#0b6b4f; --verde-bg:#e9f6ef;
+  --vermelho:#a8261f; --vermelho-bg:#fdeeed; --amarelo-bg:#fdf6e3;
+  --txt:#151b26; --sec:#545e72; --linha:#e4e8f0; --bd:#c3cbd9;
+  --sup:#fff; --sup1:#f6f7fa; --sup2:#edf0f6;
+  --r:14px; --r2:10px; --hdr:56px;
+}
+/* TRÊS estados de tema, não dois. O padrão do sistema não estampa nada no root,
+   e só o `prefers-color-scheme` separa claro de escuro; uma escolha explícita do
+   leitor estampa `data-theme`. Sem o par de blocos abaixo, a escolha explícita
+   seria ignorada e a tela sairia com texto de um tema no fundo do outro. */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --txt:#e8ecf4; --sec:#a3adc0; --linha:#2a3242; --bd:#3d4757;
+    --sup:#161b24; --sup1:#10141b; --sup2:#1e242f; --verde-bg:#0e2a20;
+    --vermelho-bg:#2c1513; --amarelo-bg:#2a2418; --azul2:#7aa7e0;
+    --azul:#243b5e; --verde:#2f9c78; --vermelho:#e08a82;
+  }
+}
+:root[data-theme="dark"]{
+  --txt:#e8ecf4; --sec:#a3adc0; --linha:#2a3242; --bd:#3d4757;
+  --sup:#161b24; --sup1:#10141b; --sup2:#1e242f; --verde-bg:#0e2a20;
+  --vermelho-bg:#2c1513; --amarelo-bg:#2a2418; --azul2:#7aa7e0;
+  --azul:#243b5e; --verde:#2f9c78; --vermelho:#e08a82;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:0 0 96px;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:var(--txt);background:var(--sup1);-webkit-text-size-adjust:100%}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:0;z-index:20;background:var(--sup);border-bottom:1px solid var(--linha)}
+.hd{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hd b{font-size:15px}
+.hd .sp{flex:1}
+.barra{height:4px;background:var(--sup2)}
+.barra i{display:block;height:100%;background:var(--azul2);width:0}
+h1{font-size:22px;line-height:1.25;margin:18px 0 6px;letter-spacing:-.3px}
+p.sub{color:var(--sec);margin:0 0 18px}
+button{font:inherit;cursor:pointer;border-radius:var(--r2);min-height:48px}
+.pri{width:100%;background:var(--azul);color:#fff;border:0;padding:14px;font-weight:600;font-size:17px;margin-bottom:10px}
+.sec{width:100%;background:var(--sup);color:var(--azul2);border:1.5px solid var(--linha);padding:12px;margin-bottom:10px}
+input[type=password],input[type=text]{width:100%;font:inherit;padding:13px;
+  border:1.5px solid var(--bd);border-radius:var(--r2);background:var(--sup);
+  color:var(--txt);min-height:48px;margin-bottom:10px}
+input:focus-visible,button:focus-visible{outline:3px solid var(--azul2);outline-offset:2px}
+#erroSenha{background:var(--vermelho-bg);border:1px solid var(--vermelho);color:var(--vermelho);
+  border-radius:var(--r2);padding:11px;margin-bottom:10px;font-size:16px}
+.chip{display:inline-block;background:var(--sup2);color:var(--sec);border:1px solid var(--linha);
+  border-radius:999px;padding:5px 12px;font-size:14px;margin:0 6px 8px 0;min-height:auto}
+.chip.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.card{background:var(--sup);border:1px solid var(--linha);border-radius:var(--r);padding:16px;margin:14px 0}
+.meta{font-size:15px;color:var(--sec);margin-bottom:10px}
+.enun{font-size:17px;line-height:1.55;white-space:pre-wrap;overflow-wrap:break-word}
+figure{margin:14px 0}
+figure img{display:block;width:100%;max-width:100%;height:auto;border-radius:var(--r2);border:1px solid var(--linha)}
+figcaption{font-size:15px;color:var(--sec);margin-top:6px}
+.alt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:var(--sup);
+  border:1.5px solid var(--bd);border-radius:var(--r2);padding:13px;margin:9px 0;min-height:48px;color:var(--txt)}
+.alt .L{flex:0 0 26px;height:26px;border-radius:6px;background:var(--sup2);color:var(--sec);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.alt.certa{border-color:var(--verde);background:var(--verde-bg)}
+.alt.errada{border-color:var(--vermelho);background:var(--vermelho-bg)}
+.alt.certa .L{background:var(--verde);color:#fff}
+.alt.errada .L{background:var(--vermelho);color:#fff}
+.alt[disabled]{cursor:default;opacity:1}
+.pq{font-size:15.5px;color:var(--sec);margin:6px 0 0 36px;line-height:1.45}
+.box{border-radius:var(--r2);padding:13px;margin:12px 0;font-size:16px;line-height:1.5}
+.box.regra{background:var(--sup2);border-left:4px solid var(--azul2)}
+.box.deles{background:var(--sup1);border:1px solid var(--linha)}
+.box.minha{background:var(--verde-bg);border:1px solid var(--verde)}
+.box.aviso{background:var(--amarelo-bg);border:1px solid #d6b656}
+.box h4{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.4px;color:var(--sec)}
+.fonte{font-size:15px;color:var(--sec);margin-top:8px}
+footer{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--sup);
+  border-top:1px solid var(--linha);padding:8px 16px;display:flex;gap:8px;align-items:center}
+footer .in{max-width:760px;margin:0 auto;width:100%;display:flex;gap:8px;align-items:center}
+footer button{flex:1;min-height:46px;background:var(--sup);border:1.5px solid var(--linha);color:var(--txt)}
+footer button.forte{background:var(--azul);color:#fff;border:0;font-weight:600}
+.st{font-size:13.5px;color:var(--sec);min-width:74px}
+.st.off{color:var(--vermelho);font-weight:600}
+.hide{display:none!important}
+.placar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 0}
+.placar span{font-size:14px;color:var(--sec);background:var(--sup2);border-radius:8px;padding:4px 9px}
+table.res{width:100%;border-collapse:collapse;font-size:14.5px;margin:10px 0}
+table.res th,table.res td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--linha)}
+.zoom{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.92);display:flex;
+  align-items:center;justify-content:center;padding:12px}
+.zoom img{max-width:100%;max-height:88vh;width:auto;height:auto}
+.zoom button{position:absolute;top:12px;right:12px;min-width:96px}
+@media (min-width:768px){ h1{font-size:26px} .enun{font-size:17.5px} }
+</style>
+<div class="hd">
+  <b id="hTit">N1 · 19/09</b>
+  <span class="st" id="hQuem"></span>
+  <span class="sp"></span>
+  <span class="st" id="hProg"></span>
+</div><div class="barra"><i id="hBarra"></i></div><main class="wrap">
+
+<section id="tLogin">
+  <h1>Treino para a N1 Específica</h1>
+  <p class="sub" id="subLogin"></p>
+  <div id="listaNomes"></div>
+  <div class="box aviso" id="avisoNav"></div>
+</section>
+
+<section id="tSenha" class="hide">
+  <h1 id="oiSenha"></h1>
+  <p class="sub">Digite sua senha para continuar.</p>
+  <input id="campoSenha" type="password" inputmode="text" autocomplete="current-password"
+         placeholder="senha" aria-label="sua senha">
+  <div id="erroSenha" class="hide"></div>
+  <button class="pri" id="btEntrar">Entrar</button>
+  <button class="sec" id="btNaoSouEu">Não sou eu</button>
+  <div class="box deles" style="margin-top:18px">
+    <h4>sobre esta senha</h4>
+    Ela existe para o link não abrir na mão de quem não é do grupo. Num app que roda
+    inteiro no seu aparelho, quem abrir o código-fonte contorna — então <b>não guarde aqui nada
+    que você não contaria</b>. Proteção de verdade passa a existir quando o servidor conferir.
+  </div>
+</section>
+
+<section id="tMenu" class="hide">
+  <h1 id="oi"></h1>
+  <p class="sub" id="resumoMenu"></p>
+  <button class="pri" id="btTreino">Treinar pelo banco</button>
+  <button class="pri" id="btSimulado">Fazer um simulado (20 itens · 1h20)</button>
+  <button class="sec" id="btRetomar">Retomar simulado em andamento</button>
+  <div id="temasMenu"></div>
+  <button class="sec" id="btTrocar">Trocar de pessoa</button>
+</section>
+
+<section id="tQuest" class="hide">
+  <div id="faixaModo"></div>
+  <div class="card">
+    <div class="meta" id="qMeta"></div>
+    <div class="enun" id="qEnun"></div>
+    <div id="qImgs"></div>
+  </div>
+  <div id="qAlts"></div>
+  <div id="qExpl"></div>
+</section>
+
+<section id="tFim" class="hide">
+  <h1 id="fimTit"></h1>
+  <p class="sub" id="fimSub"></p>
+  <div id="fimTab"></div>
+  <button class="pri" id="btVerErros">Rever item por item</button>
+  <button class="sec" id="btVoltaMenu">Voltar ao início</button>
+</section>
+
+</main>
+
+<footer><div class="in">
+  <span class="st" id="status"></span>
+  <button id="btPular">Pular</button>
+  <button id="btProx" class="forte">Próxima</button>
+  <button id="btSair">Sair</button>
+</div></footer>
+
+<script>
+var DADOS = {"equipe": [{"nome": "Rafael", "h": "02fec22ec2ae26c6"}, {"nome": "Colega 2", "h": "ee7aed86071ac791"}, {"nome": "Colega 3", "h": "287980f0c1139ae7"}, {"nome": "Colega 4", "h": "17b5fb716673fb9c"}, {"nome": "Colega 5", "h": "74549f5ae53177b5"}], "equipe_provisoria": true, "sal": "n1-19-09|2026|afya-guanambi", "itens": [{"id": "CI2-2025.1-c01-q02", "componente": "CI", "tema": "anestesia-geral", "subtema": "previsão de via aérea difícil e critérios de adiamento do procedimento", "fonte_arquivo": "CI2-2025.1.pdf", "numero_no_caderno": "02", "banca_origem": "AFYA PALMAS", "enunciado": "(AFYA PALMAS) Um paciente encontra-se no centro cirúrgico para realizar uma colecistectomia\nvideolaparoscópica. No momento da anestesia, o anestesista optou por realizar anestesia geral\nassociada à peridural. Dentre as possíveis complicações, assinale a alternativa correta.", "alts": [{"texto": "No centro cirúrgico, após intubação orotraqueal o anestesista deve levar o paciente para o setor\nde radiologia para realizar radiografia de tórax, antes do procedimo cirúrgico, para checar o\nposicionamento do tubo orotraqueal.", "porque_cai": "Errada, e perigosa: confirmação de posicionamento do tubo é imediata e clínica — capnografia e ausculta —, feita ali mesmo. Transportar um paciente recém-intubado ao setor de imagem antes da cirurgia adiciona risco de extubação e perda de via aérea sem nenhum ganho."}, {"texto": "Pacientes com pneumonia devem realizar suas cirurgias eletiva normalmente, visto que\npneumonia não altera o desfecho de anestesia geral em comparação com pacientes sem\npneumonia. E adiar o procedimento poderia oferecer risco ao paciente.", "porque_cai": "Errada: infecção respiratória ativa é motivo clássico de adiamento de cirurgia ELETIVA, porque aumenta broncoespasmo, atelectasia e complicação pulmonar pós-operatória. O raciocínio de que 'adiar oferece risco' vale para urgência, não para eletiva."}, {"texto": "Se o paciente apresentar temperatura acima de 37,8 durante o intraoperatório, trata-se de febre, e\ndeve ser tratado com dipirona, visto que a antibioticoterapia deve ser iniciada o mais breve\npossível, e não existem outras causas graves que levam ao aumento da temperatura.", "porque_cai": "Errada por dois motivos: o limiar não é o ponto central, e sobretudo hipertermia no intraoperatório obriga a pensar em hipertermia maligna, que é emergência com tratamento específico (dantroleno, suspender o agente desencadeante). Tratar como febre infecciosa e dar antitérmico é perder o diagnóstico que mata."}, {"texto": "Distância entre os dentes incisivos, Mallampati, obesidade, presença de dentes, barba e\nmobilidade cervical são critérios que devem ser observados antes de realizar intubação por\nserem preditivos de via aérea difícil.", "porque_cai": "Correta: é exatamente o conjunto de preditores anatômicos de via aérea difícil que se avalia antes da indução, e cada um deles muda a preparação."}], "correta_id": 3, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Via aérea difícil se prevê ANTES de induzir, no exame do paciente: abertura de boca, o que se vê da faringe, o que atrapalha a ventilação com máscara e o quanto o pescoço mexe. Radiografia não faz parte dessa previsão.", "explicacao_minha": "A questão cobra o que se olha na avaliação pré-anestésica. Os preditores clássicos de via aérea difícil são anatômicos e de beira de leito: distância interincisivos pequena, classificação de Mallampati alta, obesidade, dentição, barba (que atrapalha o selo da máscara) e mobilidade cervical reduzida. É o mesmo conjunto que as diretrizes de via aérea difícil pedem para rastrear, porque todos podem ser checados em segundos e mudam o plano (videolaringoscópio pronto, plano B definido, intubação acordado se necessário). O erro que a prova testa é confundir avaliação PREDITIVA com confirmação DEPOIS do tubo: a checagem de posicionamento é clínica e imediata (ausculta, capnografia), não uma viagem ao setor de imagem com o paciente já anestesiado.", "explicacao_deles": "A alternativa correta é a: Distância entre os dentes incisivos, Mallampati, obesidade, presença de\ndentes, barba e mobilidade cervical são critérios que devem ser observados antes de realizar\nintubação por serem preditivos de via aérea difícil.\nExplicação:\nO aumento da temperatura no intraoperatório pode ter diversas causas, incluindo hipertermia\nmaligna, resposta inflamatória à manipulação cirúrgica, reação a anestésicos ou infecção. A\nhipertermia maligna, por exemplo, é uma emergência anestésica e não deve ser tratada apenas\ncom dipirona. Além disso, antibioticoterapia não deve ser iniciada sem indicação clínica.\nA avaliação prévia da via aérea é essencial para evitar complicações durante a intubação. Fatores\ncomo distância interincisiva, classificação de Mallampati, obesidade, presença de dentes, barba e\nmobilidade cervical são importantes preditores de via aérea difícil.\nApós a intubação orotraqueal, a checagem do posicionamento do tubo deve ser feita no próprio\ncentro cirúrgico, utilizando métodos como ausculta pulmonar bilateral, capnografia e observação\nda expansão torácica. Não é necessário levar o paciente para o setor de radiologia antes do\nprocedimento cirúrgico.\nPneumonia ativa é um fator de risco significativo para complicações pulmonares no pós-\noperatório, podendo aumentar a morbidade e mortalidade. Cirurgias eletivas devem ser adiadas\naté que a infecção esteja resolvida.", "atualizacao_de_diretriz": "", "fonte_citada": "ASA Practice Guidelines for Management of the Difficult Airway", "fonte_ano": "2022", "referencias": ["SAAD JUNIOR, Roberto; SALLES, Ronaldo Antonio Reis Vianna; CARVALHO, Walter Roriz de;", "MAIA, Accyoli Moreira; CASTRO FILHO, Heládio Feitosa de; VON BAHTEN, Luiz Carlos (Orgs.).\nTratado de Cirurgia do CBC. 3. ed. São Paulo: Atheneu, 2022. ISBN 9786555865394."], "imagens": []}, {"id": "CI2-2025.1-c01-q03", "componente": "CI", "tema": "torchs-prenatal", "subtema": "toxoplasmose na gestação — interpretação de IgM/IgG com avidez e conduta", "fonte_arquivo": "CI2-2025.1.pdf", "numero_no_caderno": "03", "banca_origem": "UNISL PORTO VELHO", "enunciado": "(UNISL PORTO VELHO) Uma gestante de 12 semanas, 25 anos, comparece à Unidade Básica\nde Saúde para consulta de pré-natal. Está assintomática e não possui comorbidades. Durante a\ninvestigação laboratorial inicial, os exames sorológicos para toxoplasmose apresentam os\nseguintes resultados:\n    •    IgM para Toxoplasma gondii: Reagente.\n    •    IgG para Toxoplasma gondii: Reagente.\n    •    Avidade da IgG: Baixa.\nA paciente nega sintomas como febre, linfadenopatia ou mal-estar recente. Com base nesses\nachados, qual é a melhor conduta a ser tomada?", "alts": [{"texto": "Solicitar nova sorologia em 3 semanas e tratar somente se houver aumento do IgG.", "porque_cai": "Errada: repetir sorologia e esperar aumento de IgG desperdiça a janela em que o tratamento reduz transmissão. Com avidez baixa no primeiro trimestre a conduta é agir, não observar."}, {"texto": "Administrar sulfadiazina, pirimetamina e ácido folínico imediatamente, pois há infecção\nconfirmada.", "porque_cai": "Errada no tempo e na droga: o esquema tríplice é para infecção FETAL confirmada. Aqui a infecção materna é recente mas a fetal ainda não foi investigada — e usar pirimetamina sem indicação expõe a paciente à toxicidade sem benefício provado."}, {"texto": "Iniciar tratamento com espiramicina e solicitar amniocentese para PCR de Toxoplasma gondii a\npartir da 18ª semana.", "porque_cai": "Correta: espiramicina imediata, que é a profilaxia da transmissão vertical, e amniocentese com PCR a partir de 18 semanas, que é o exame que confirma ou afasta a infecção fetal com falso-negativo aceitável."}, {"texto": "Tranquilizar a paciente, pois a presença de IgG indica imunidade e não há risco fetal.", "porque_cai": "Errada, e é a pegadinha mais comum do tema: IgG positivo isolado indicaria infecção antiga, mas aqui há IgM positivo com avidez baixa. Chamar isso de imunidade e liberar a paciente é perder um caso tratável de toxoplasmose congênita."}], "correta_id": 2, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "IgM positivo com avidez BAIXA no primeiro trimestre = infecção recente até prova em contrário: espiramicina já, e PCR do líquido amniótico só a partir de 18 semanas. Avidez ALTA no primeiro trimestre é que tranquiliza.", "explicacao_minha": "Dois números decidem tudo aqui. Primeiro a avidez: baixa (abaixo de ~30%) indica infecção nos últimos ~3 meses; alta (acima de ~60%) no primeiro trimestre empurra a infecção para antes da gravidez; entre os dois é inconclusivo. Segundo o prazo do PCR no líquido amniótico: só a partir da 18ª semana e passadas ~4 semanas da soroconversão, senão a taxa de falso-negativo sobe e um resultado negativo não serve para nada. Enquanto a infecção fetal não está confirmada, a droga é a espiramicina, que reduz transmissão placentária sem a toxicidade do esquema tríplice. O esquema pirimetamina + sulfadiazina + ácido folínico entra quando a infecção FETAL está confirmada, e não antes — é ele que exige o ácido folínico para proteger a medula.", "explicacao_deles": "Resposta correta: Iniciar tratamento imediato com espiramicina e solicitar amniocentese para\nPCR de Toxoplasma gondii a partir da 18ª semana.\nJustificativa:\nA presença de IgM reagente com IgG reagente e baixa avidez sugere infecção aguda ou recente,\no que pode indicar risco de transmissão vertical. Como ainda não há confirmação de infecção\nfetal, o protocolo adequado é:\n    1.    Iniciar espiramicina (1g a cada 8h) para reduzir o risco de transmissão placentária.\n  2. Realizar amniocentese com PCR para Toxoplasma gondii a partir da 18ª semana para\ninvestigar infecção fetal.\n   3. Se PCR positivo, trocar para sulfadiazina + pirimetamina + ácido folínico, que são mais\neficazes no tratamento fetal.\nRespostas incorretas:\n- Tranquilizar a paciente: a baixa avidez indica infecção recente, sendo necessário tratamento e\ninvestigação fetal.\n- Aguardar nova sorologia antes de tratar: o tratamento deve ser iniciado precocemente para\nreduzir a transmissão.\n- Iniciar sulfadiazina + pirimetamina imediatamente: essa combinação é reservada para casos\ncom infecção fetal confirmada.", "atualizacao_de_diretriz": "", "fonte_citada": "PCDT de Prevenção da Transmissão Vertical de HIV, Sífilis e Hepatites Virais (Ministério da Saúde); Febrasgo — Gestação de Alto Risco", "fonte_ano": "2024", "referencias": ["BRASIL. Ministério da Saúde. Protocolo de Atenção à Gestante com Infecção por Toxoplasma\ngondii, 2023.\nRed Book – American Academy of Pediatrics, 2021.\nCunningham et al. Williams Obstetrics, 26ª edição, 2023."], "imagens": []}, {"id": "CI2-2025.1-c01-q04", "componente": "CI", "tema": "anemias", "subtema": "anemia megaloblástica no adulto e anemia microcítica na infância — conduta em cada caso", "fonte_arquivo": "CI2-2025.1.pdf", "numero_no_caderno": "04", "banca_origem": "UNIFIPMOC", "enunciado": "(UNIFIPMOC) Caso 1: A.P.J., 66 anos, refere \"pele amarelada\", parestesia progressiva em\nmembros inferiores e ardência na língua. É portador de diabetes mellitus tipo 2 e gastrite, usando\nMetformina 850 mg 3x/dia e Omeprazol 20 mg pela manhã em jejum. Sem outros sinais e\nsintomas associados. No exame físico foi observado atrofia de papilas linguais. Exames\nlaboratoriais: hemograma: Hb: 8,8 g/dL, Ht: 26%, VCM: 112 fL (VN: 80-95 fL), leucócitos:\n3.200/uL, plaquetas: 124.000/uL; Contagem absoluta de reticulócitos: 22.000/uL (VN: 25.000-\n105.000/uL); ferro sérico: 97 ug /dL (VN: 40-160 ug/dL); TIBC: 325 ug/dL (VN: 300-360 ug/dL);\nsaturação da transferrina: 30%; ferritina: 120 ng/mL (VN: 6-159 ng/mL); LDH: 5.460 U/L (VN < 460\nU/L); bilirrubinas totais: 1,8 mg/dL (VN <1,0 mg/dL); Coombs direto: negativo; TSH: 4,0 mU/L (VN:\n0,5 -5,0 mU/L). Hematoscopia: presença de neutrofilos hipersegmentados.\nCaso 2: P.S.S., de 4 anos de idade, compareceu a consulta rotina de puericultura. Pais não\nrelatavam queixas clínicas neste atendimento. Possui alimentação ruim, mas bom\ndesenvolvimento global. Peso e estatura ambos nos percentis 50 (P50) para idade e sexo.\nObservou-se mucosas hipocoradas (+/4+) ao exame físico. O paciente retorna após uma\nsemana para avaliação de resultado de exames laboratoriais solicitados previamente. Traz o\nseguinte laudo de exame hematimétrico: eritrócitos 5,55 milhões/mm3 (VN: 3,6 a 5,2);\nhemoglobina 10,40 g/dL (VN: 11 a 13,1 g/dL); hematócrito 32,10% (VN: 35,0 - 43,0%); VCM 57,83\nfL (VN: 74,0 a 102,0 fL); HCM 18,73 pg (VN: 23,0 a 31,0 pg); CHCM 32,39 g/dL (VN: 26,0 a 34,0\ng/dL) RDW 13,6% (VN: 11,5 a 14,5%). Série vermelha: microcitose e hipocromia discretas;\nausência de anisocitose. Contagem de reticulócitos: 110.000 de reticulócitos absolutos.\nA conduta mais apropriada em cada caso seria:", "alts": [{"texto": "Caso 1: prescrever vitamina B12 intramuscular.\nCaso 2: prescrever ácido fólico por via oral.", "porque_cai": "Errada: trata sem confirmar no adulto e escolhe o cofator errado na criança. O ácido fólico numa microcitose não faz sentido fisiopatológico, e repor B12 antes de dosar apaga o exame que fecharia o diagnóstico."}, {"texto": "Caso 1: prescrever vitamina ácido fólico por via oral.\nCaso 2: prescrever ferro por via oral.", "porque_cai": "Errada nos dois casos: ácido fólico não resolve um quadro que aponta para B12, e ferro empírico numa microcitose com RDW normal pode estar tratando talassemia, que ferro não corrige."}, {"texto": "Caso 1: solicitar dosagem de vitamina B12.\nCaso 2: prescrever ferro por via endovenosa.", "porque_cai": "Errada na segunda metade: investigar B12 no adulto está certo, mas ferro endovenoso na criança é conduta agressiva sem indicação — ela está estável e o perfil pede investigação, não reposição parenteral."}, {"texto": "Caso 1: solicitar dosagem de vitamina B12.\nCaso 2: solicitar eletroforese de hemoglobina.", "porque_cai": "É a alternativa que a banca havia marcado, e ela é coerente: dosar B12 no adulto e pedir eletroforese de hemoglobina na criança investigam antes de tratar, em cada caso pelo exame que fecha o diagnóstico mais provável."}], "correta_id": 3, "parecer": "anulada", "nota_da_anulacao": "A banca anulou este item. Ele fica no banco como material de estudo do raciocínio, e fora do sorteio do simulado.", "regra_de_bolso": "VCM alto com neutrófilo hipersegmentado, LDH muito alto e reticulócito baixo = megaloblástica por B12, e o gatilho é metformina com omeprazol. VCM baixo com RDW normal e sem anisocitose em criança pede eletroforese antes de ferro: pode ser talassemia.", "explicacao_minha": "São dois raciocínios em paralelo. No adulto, o VCM de 112 fL com hipersegmentação de neutrófilos, LDH altíssimo, bilirrubina indireta elevada, Coombs negativo e reticulócito baixo desenha eritropoese ineficaz — a hemólise é intramedular, não periférica. O contexto fecha: metformina e inibidor de bomba de prótons são dois redutores clássicos de absorção de B12, e a glossite atrófica com parestesia é a manifestação neurológica. Na criança, o achado que muda a conduta é a combinação de microcitose acentuada com RDW normal e sem anisocitose: na ferropenia o RDW sobe cedo e a população fica heterogênea; um VCM de 57 fL com população homogênea puxa para talassemia, onde ferro sem indicação não corrige nada e ainda causa sobrecarga. Por isso a conduta de investigar antes de tratar.", "explicacao_deles": "Caso 1: trata-se de um quadro é absolutamente clássico de anemia megaloblástica (VCM > 110\nfl); existe glossite atrófica, um sinal inespecífico de anemia carencial, mas a cinética de ferro\nnormal afasta a possibilidade de ferropenia; existe um sinal importante que é a presença de\nneutrofilos hipersegmentados à hematoscopia. A anemia megaloblástica é causada por\ndeficiência de folato e ou de vitamina B12, mas é importante salientar que a deficiência de B12\njustifica manifestações neurológicas como fraqueza e parestesia em membros inferiores.\nAdemais, há fatores de risco para má-absorção de B12 (idade avançada e uso de Metformina).\nDesse modo, recomenda-se dosar vitamina B12 e seguir com a reposição. \nCaso 2: o caso apresenta anemia microcítica e hipocrômica. Assim, a principal hipótese\ndiagnóstica é de anemia ferropriva. Porém, note que o RDW é normal. Assim, é fundamental\nconsiderar a possibilidade de beta-talassemia minor, forma clínica da doença que cursa com\ndiscreta redução da hemoglobina, que não traz repercussões clínicas. Além disso, a microcitose\nda talassemia costuma ser mais marcante que a da ferropriva (VCM = 57). Portanto, é preciso\nsolicitar uma eletroforese de hemoglobina para confirmá-la a principal hipótese de beta-\ntalassemina minor.", "atualizacao_de_diretriz": "Item ANULADO pela banca, então não vale como gabarito. Além disso, os pontos de corte de hemoglobina para definir anemia foram alterados pela OMS em 2024 — os valores de referência impressos na prova podem não ser os vigentes.", "fonte_citada": "Medicina Interna de Harrison; PCDT de Doença Falciforme e talassemias (Ministério da Saúde)", "fonte_ano": "2024", "referencias": ["Lorenzi, Therezinha F. Manual de Hematologia - Propedêutica e Clínica, 4ª edição. Disponível em:\nMinha Biblioteca, Grupo GEN, 2006.\nHoffbrand, A., V. e P. A. H. Moss. Fundamentos em hematologia de Hoffbrand. Disponível em:\nMinha Biblioteca, (7th edição). Grupo A, 2018."], "imagens": []}, {"id": "CI2-2025.1-c01-q06", "componente": "CI", "tema": "glomerulopatias", "subtema": "síndrome nefrótica na infância — achados que a definem, contra os da síndrome nefrítica", "fonte_arquivo": "CI2-2025.1.pdf", "numero_no_caderno": "06", "banca_origem": "AFYA IPATINGA", "enunciado": "(AFYA IPATINGA) Menina de 3 anos iniciou com quadro de edema periorbitário especialmente\nmatutino e bilateral há 4 dias, inicialmente tratada como angioedema, sem resposta. O médico\nconsiderou a hipótese de Síndrome Nefrótica embasado em outras alterações clínicas e\nlaboratoriais adicionais.\nMarque a alternativa que corresponde às alterações encontradas que são comuns e confirmariam\na hipótese diagnóstica do médico.", "alts": [{"texto": "Hipertensão arterial, cilindros granulosos, antidesoxirribonuclease B positiva.", "porque_cai": "Errada: hipertensão, cilindro granuloso e anti-DNAse B positiva compõem o quadro da glomerulonefrite pós-infecciosa, não da nefrótica. Essa alternativa existe justamente para pegar quem não separou as duas síndromes."}, {"texto": "Oligúria, hipoalbuminemia, hipercolesterolemia.", "porque_cai": "Correta: oligúria, hipoalbuminemia e hipercolesterolemia é a tríade que decorre diretamente da perda de proteína pelo glomérulo."}, {"texto": "C3 e CH50 aumentados, cilindros hemáticos, urina espumosa.", "porque_cai": "Errada num detalhe que inverte o sentido: na doença mediada por complemento ele fica CONSUMIDO, portanto reduzido, não aumentado. E cilindro hemático é marcador de sedimento nefrítico."}, {"texto": "C3 e CH50 reduzidos, hiperlipidemia, leucocitúria.", "porque_cai": "Errada por mistura: complemento reduzido é nefrítico, hiperlipidemia é nefrótico, e leucocitúria não é achado que defina nenhuma das duas. Alternativa que junta pedaços de quadros diferentes é o distrator clássico deste tema."}], "correta_id": 1, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Nefrótica é a síndrome da PERDA DE PROTEÍNA: proteinúria maciça, albumina baixa, edema e colesterol alto. Nefrítica é a síndrome da INFLAMAÇÃO: hematúria com cilindro hemático, hipertensão, oligúria e complemento consumido.", "explicacao_minha": "Edema periorbitário matinal em criança é o cartão de visita da síndrome nefrótica, e a pergunta é qual tríade acompanha. A cadeia fisiopatológica dá a resposta sem decorar lista: a barreira glomerular perde proteína, então a albumina cai; com albumina baixa o líquido sai do vaso e vira edema; o fígado responde à hipoalbuminemia produzindo mais lipoproteína, e o colesterol sobe. Oligúria aparece porque o volume intravascular efetivo diminuiu. Já os achados de complemento consumido, cilindro hemático e antiestreptolisina/antiDNAse positiva pertencem à glomerulonefrite pós-estreptocócica — a outra ponta do par que o objetivo de aprendizagem manda diferenciar.", "explicacao_deles": "Resposta correta: Oligúria, hipoalbuminemia, hipercolesterolemia.\nAs anormalidades presentes mais comumente na Síndrome Nefrótica seriam hiperlipidemia, urina\nespumosa com presença de cilindros hialinos, oligúria, hipoalbuminemia devido a proteinúria alta.\nA alteração de C3 e CH50 (redução), hipertensão arterial, urina cor de coca-cola representando\nhematúria, presença de cilindros hemáticos e dismorfismo eritrocitário, antidesoxirribonuclease B\npositiva são indicativos da Síndrome Nefrítica.", "atualizacao_de_diretriz": "Atenção: em 2025 a KDIGO publicou diretriz PRÓPRIA para síndrome nefrótica na infância, separada do documento de 2021 que a prova cita. O conceito cobrado aqui não mudou, mas condutas específicas de imunossupressão na criança devem ser lidas na versão de 2025.", "fonte_citada": "KDIGO Clinical Practice Guideline for the Management of Glomerular Diseases", "fonte_ano": "2021", "referencias": ["Diagnóstico e tratamento de glomerulonefrite pós-infecciosa – revisão narrativa - REAS/EJCH |\nVol. Sup. n. 59 | e4254 | DOI: https://doi.org/10.25248/reas.e4254.2020. \nSociedade Brasileira de Pediatria de São Paulo. Atualização de condutas em pediatria: Síndrome\nNefrótica. Junho de 2019."], "imagens": []}, {"id": "CI2-2025.1-c01-q08", "componente": "CI", "tema": "sepse", "subtema": "choque séptico no pós-operatório — reconhecimento e o pacote inicial", "fonte_arquivo": "CI2-2025.1.pdf", "numero_no_caderno": "08", "banca_origem": "IESVAP", "enunciado": "(IESVAP) Um paciente idoso, 78 anos, foi submetido a uma cirurgia de emergência devido a uma\nobstrução intestinal. No pós-operatório, 48 horas após a cirurgia, ele apresenta os seguintes\nsinais e sintomas: febre de 39°C, frequência cardíaca de 110 bpm, pressão arterial de 85/50\nmmHg, frequência respiratória de 35 irpm e alteração do estado mental (confusão).\nCom base no protocolo de sepse, qual das seguintes opções é a mais adequada para o\ndiagnóstico de choque séptico e as condutas iniciais a serem adotadas?", "alts": [{"texto": "Diagnóstico de choque séptico; iniciar antibióticos intravenosos, realizar expansão volêmica com\nsolução salina, iniciar drogas vasoativas e realizar tomografia computadorizada do abdômen.", "porque_cai": "Reconhece o choque e lista antibiótico, volume e vasoativo, e ainda inclui a imagem abdominal, que num pós-operatório de obstrução intestinal é o exame que procura o foco a ser drenado. É defensável, e é parte do motivo pelo qual o item foi contestado."}, {"texto": "Diagnóstico de choque séptico; iniciar ressuscitação volêmica com cristaloides, iniciar antibióticos\nintravenosos e monitorar a resposta clínica.", "porque_cai": "É a alternativa que a banca havia marcado: reconhece o choque e traz a tríade cristaloide, antibiótico e reavaliação. O que ela não menciona é o controle do foco, que neste caso cirúrgico é peça do tratamento."}, {"texto": "Diagnóstico de sepse; iniciar antibióticos endovenosos, oxigênio suplementar, hidratação venosa\nde manutenção e monitorar sinais vitais.", "porque_cai": "Errada na classificação: chamar de sepse um paciente hipotenso e confuso subestima a gravidade, e hidratação de manutenção não é ressuscitação volêmica."}, {"texto": "Diagnóstico de sepse; escalonar antibioticoterapia, realizar expansão volêmica com cristaloides e\nmonitorizar respostas.", "porque_cai": "Errada por dois motivos: também rotula como sepse quando há choque, e 'escalonar antibioticoterapia' pressupõe um esquema em curso que o caso não descreve."}], "correta_id": 1, "parecer": "anulada", "nota_da_anulacao": "A banca anulou este item. Fica no banco como estudo do raciocínio e fora do sorteio.", "regra_de_bolso": "Sepse com hipotensão que não responde a volume, ou lactato alto, é CHOQUE séptico: cultura sem atrasar antibiótico, antibiótico na primeira hora, cristaloide 30 mL/kg e noradrenalina se a pressão não subir.", "explicacao_minha": "O quadro é claro: 48 horas de pós-operatório de abdome, febre, taquicardia, taquipneia, hipotensão e confusão. O que a prova quer é que você não pare em 'sepse' quando há hipotensão e disfunção — e que a sequência inicial esteja certa. A ordem das medidas importa mais que a lista: coletar cultura só se isso não atrasar o antibiótico, começar o antimicrobiano de amplo espectro na primeira hora, repor cristaloide e escalar para vasopressor quando o volume não sustenta a perfusão. E há um segundo eixo que este caso específico levanta: em sepse de foco abdominal pós-operatório, controle do foco é parte do tratamento, não detalhe — a imagem que localiza a coleção tem valor, desde que não retarde antibiótico e volume.", "explicacao_deles": "O paciente apresenta sinais claros de choque séptico, incluindo febre, taquicardia, hipotensão e\nalteração do estado mental. \n- Condutas Iniciais:\n- Ressuscitação Volêmica: A administração de cristaloides é fundamental para corrigir a\nhipotensão e melhorar a perfusão tecidual. A ressuscitação volêmica deve ser iniciada\nrapidamente em casos de choque séptico.\n- Antibióticos Intravenosos: A administração precoce de antibióticos intravenosos é crucial para o\ntratamento da infecção subjacente, que é a causa do choque séptico.\n- Monitoramento: A monitorização contínua dos sinais vitais e da resposta à ressuscitação é\nessencial para avaliar a eficácia das intervenções e ajustar o tratamento conforme necessário.\n- Exames de imagem, apesar de fundamentais, não são a prioridade; a prioridade inicial é a\nestabilização clínica do paciente.\n- O uso de drogas vasoativas se faz necessário apenas se houver refratariedade do choque à\ninfusão de cristaloides.", "atualizacao_de_diretriz": "Item ANULADO pela banca. E a diretriz mudou: a Surviving Sepsis Campaign 2026 substituiu a de 2021 citada na prova, com pressão arterial média inicial alvo de 60–65 mmHg em pacientes de 65 anos ou mais — exatamente a faixa deste paciente de 78 anos.", "fonte_citada": "Surviving Sepsis Campaign — International Guidelines for Management of Sepsis and Septic Shock; definição Sepsis-3", "fonte_ano": "2021", "referencias": ["DOHERTY, Gerard M. CURRENT Cirurgia. 14. ed. Porto Alegre: AMGH, 2017. E-book. p. 83.", "ISBN 9788580556018. Disponível em:\nhttps://integrada.minhabiblioteca.com.br/reader/books/9788580556018/. Acesso em: 14 mar.\n2025."], "imagens": []}, {"id": "CI2-2025.1-c01-q09", "componente": "CI", "tema": "esofago-cirurgico", "subtema": "varizes esofágicas — profilaxia secundária depois de sangramento", "fonte_arquivo": "CI2-2025.1.pdf", "numero_no_caderno": "09", "banca_origem": "", "enunciado": "(FACIMPA0 J. C., 54 anos, sexo masculino, com histórico de etilismo crônico e diagnóstico\nprévio de cirrose hepática, comparece ao ambulatório para seguimento clínico. Refere episódio\nrecente de hematêmese volumosa há três semanas, sendo internado e tratado com sucesso. No\nmomento, está hemodinamicamente estável, sem novos episódios de sangramento, e nega\nmelena ou dor abdominal. Apresenta função hepática preservada e exame físico sem alterações\nrelevantes. A endoscopia digestiva alta realizada durante a internação evidenciou varizes\nesofágicas de médio calibre, sem sinais de alto risco de sangramento. Indique a alternativa que\ncontempla a conduta correta para a patologia em questão.", "alts": [{"texto": "Uso de inibidor da bomba de prótons em dose plena por tempo indeterminado.", "porque_cai": "Errada: inibidor de bomba de prótons tem papel curto no período peri-procedimento, para reduzir úlcera pós-ligadura. Ele não previne ressangramento varicoso e não substitui nenhuma das duas medidas que previnem."}, {"texto": "Cirurgia de derivação portossistêmica para descompressão portal.", "porque_cai": "Errada no momento: cirurgia de derivação é resgate para quem falha ao tratamento endoscópico e farmacológico, com custo de encefalopatia. Indicar de saída expõe o paciente a um risco que a primeira linha resolveria."}, {"texto": "Uso isolado de betabloqueador seletivo para redução da pressão portal.", "porque_cai": "Errada em duas camadas: isolado é insuficiente na profilaxia secundária, e seletivo é o tipo errado de betabloqueador para reduzir pressão portal."}, {"texto": "Ligadura elástica endoscópica associada a betabloqueador não seletivo.", "porque_cai": "Correta: ligadura elástica endoscópica somada a betabloqueador não seletivo é a dupla estabelecida da profilaxia secundária."}], "correta_id": 3, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Depois que a variz já sangrou, profilaxia secundária é SEMPRE dupla: ligadura elástica endoscópica em sessões até erradicar, mais betabloqueador NÃO seletivo. Uma coisa só, ou betabloqueador seletivo, não serve.", "explicacao_minha": "O paciente já sangrou, então o cenário é profilaxia secundária, onde o risco de ressangramento sem tratamento é alto. As duas medidas atacam mecanismos diferentes e por isso somam: a ligadura elástica elimina o vaso que sangra, e o betabloqueador não seletivo reduz a pressão portal. O detalhe que a prova cobra é o 'não seletivo': o efeito desejado depende do bloqueio beta-2, que causa vasoconstrição esplâncnica e diminui o fluxo portal — um beta-1 seletivo baixa a frequência cardíaca e não entrega esse efeito. Derivação portossistêmica e TIPS ficam para falha do tratamento endoscópico e farmacológico, não como primeira linha.", "explicacao_deles": "O paciente apresenta histórico de cirrose hepática e episódio recente de hemorragia digestiva\nalta, com varizes esofágicas de médio calibre identificadas na endoscopia digestiva. Em casos de\nhemorragia varicosa prévia, a profilaxia secundária é fundamental para reduzir o risco de\nrecorrência, uma vez que a taxa de ressangramento pode atingir 60% em um ano sem tratamento\nadequado.\nA estratégia mais eficaz para prevenção de novos episódios de hemorragia é a associação de\nligadura elástica endoscópica com betabloqueadores não seletivos (BBNS), como propranolol ou\nnadolol. A ligadura elástica reduz o calibre das varizes e diminui o risco de rompimento, enquanto\nos BBNS atuam na redução da pressão portal por meio da vasoconstrição esplâncnica e da\ndiminuição do débito cardíaco. Essa combinação demonstrou superioridade em relação ao uso\nisolado de cada uma dessas intervenções, tornando-se a abordagem padrão na profilaxia\nsecundária do sangramento varicoso.\nO uso prolongado de inibidores da bomba de prótons (IBPs) não é indicado como medida\npreventiva para varizes esofágicas. Embora os IBPs sejam úteis no tratamento de esofagite\nerosiva e úlceras pépticas, eles não reduzem a pressão portal nem previnem o sangramento\nvaricoso, não sendo recomendados para esse paciente.\nA cirurgia de derivação portossistêmica (TIPS - Transjugular Intrahepatic Portosystemic Shunt) é\numa alternativa para casos refratários à terapia convencional ou quando há contraindicações ao\nuso de betabloqueadores e ligadura elástica. No entanto, TIPS não é a primeira escolha para\nprofilaxia secundária, pois pode desencadear complicações, como encefalopatia hepática, e é\nreservada para situações em que o tratamento convencional falha.\nO uso isolado de betabloqueadores seletivos (ex.: atenolol, metoprolol) não é recomendado para\ncontrole da hipertensão portal. Diferentemente dos betabloqueadores não seletivos, eles não\nreduzem de maneira significativa o fluxo sanguíneo esplâncnico, não sendo eficazes na\nprevenção de hemorragia varicosa.\nPortanto, a conduta correta para esse paciente é a associação de ligadura elástica endoscópica\ncom betabloqueador não seletivo, abordagem com melhor evidência na profilaxia secundária da\nhemorragia digestiva alta por varizes esofágicas.", "atualizacao_de_diretriz": "A referência vigente hoje é o Baveno VIII (2026), que substituiu o Baveno VII de 2022 citado na época da prova. A dupla ligadura + betabloqueador não seletivo permanece, mas limiares e o papel do TIPS precoce devem ser conferidos na versão nova.", "fonte_citada": "Baveno VII — Consenso em hipertensão portal", "fonte_ano": "2022", "referencias": ["GARCIA-TSAO, Guadalupe; SANYAL, Arun J.; GRACE, Norman D.; CAREY, William. Prevention\nand management of gastroesophageal varices and variceal hemorrhage in cirrhosis. Hepatology,\nv. 46, n. 3, p. 922-938, 2007.", "LOPES, A. C. Manual de Clínica Médica. 8ª ed. Rio de Janeiro: Guanabara Koogan, 2020.", "VILLA, E.; GROTTIERO, L.; BUTTAZZONI, M.; FRANZE, A. β-blockers and variceal bleeding:\nThe right drug for the right patient. Hepatology International, v. 14, p. 482-494, 2020."], "imagens": []}, {"id": "CI2-2025.1-c01-q14", "componente": "CI", "tema": "anemias", "subtema": "anemia falciforme — fisiopatologia, diagnóstico e o que NÃO é tratamento curativo", "fonte_arquivo": "CI2-2025.1.pdf", "numero_no_caderno": "14", "banca_origem": "FIP GUANAMBI", "enunciado": "(FIP GUANAMBI) João, 32 anos, comparece à Unidade Básica de Saúde (UBS) com queixas de\nfadiga intensa, dor óssea recorrente e episódios frequentes de icterícia nos últimos meses. Relata\nque, desde a infância, tem crises dolorosas esporádicas, principalmente em momentos de\nestresse ou exposição ao frio. No exame físico, apresenta conjuntivas descoradas, icterícia\ndiscreta e esplenomegalia. Os exames laboratoriais revelam: hemoglobina: 8,2 g/dL, VCM: 85 fL,\nreticulócitos: 6,5%, presença de drepanócitos no esfregaço sanguíneo, bilirrubina indireta\naumentada.\nCom base no caso apresentado, julgue os itens a seguir:\nI - A provável patologia está relacionada à mutação no gene da beta-globina, levando à formação\nde hemoglobina S.\nII - O principal mecanismo da anemia é a deficiência de ferro decorrente da hemólise crônica.\nIII - O diagnóstico pode ser confirmado por eletroforese de hemoglobina, demonstrando\npredomínio da hemoglobina S.\nIV - O tratamento curativo para essa condição é o uso crônico de hidroxiureia.\nV - Pacientes com esta condição apresentam risco aumentado de infecções, especialmente por\nbactérias encapsuladas.\nSão corretas as alternativas:", "alts": [{"texto": "I , III e V, apenas.", "porque_cai": "Aponta o conjunto correto de afirmativas verdadeiras — mutação da beta-globina com HbS, confirmação por eletroforese e risco por bactéria encapsulada."}, {"texto": "I, III e V, apenas.", "porque_cai": "Aponta exatamente o mesmo conjunto da opção anterior, com diferença apenas de espaçamento na escrita. Duas alternativas idênticas em conteúdo é o defeito formal que levou a banca a anular o item."}, {"texto": "II, III e IV, apenas.", "porque_cai": "Errada: inclui a afirmativa de que a anemia decorre de deficiência de ferro, quando o mecanismo é hemólise crônica, e deixa de fora a fisiopatologia da HbS."}, {"texto": "I, II, IV e V, apenas.", "porque_cai": "Errada: inclui a afirmativa de que hidroxiureia é tratamento curativo, e ela não é — reduz crises, mas cura é transplante."}], "correta_id": 1, "parecer": "anulada", "nota_da_anulacao": "Anulado porque duas alternativas eram equivalentes. É um bom caso para estudar o conteúdo e para entender por que uma questão cai.", "regra_de_bolso": "Falciforme: mutação da beta-globina gera HbS, o diagnóstico se confirma por eletroforese, e o risco infeccioso por bactéria encapsulada vem da autoesplenectomia. Hidroxiureia reduz crise — curar, só transplante.", "explicacao_minha": "Drepanócito no esfregaço, reticulócito de 6,5%, bilirrubina indireta alta e crises dolorosas desde a infância fecham hemoglobinopatia falciforme. Três afirmativas são verdadeiras e vale saber por quê: a mutação é na cadeia beta da globina e produz HbS, que polimeriza quando desoxigenada; a eletroforese demonstra o predomínio de HbS e é o exame confirmatório; e o risco aumentado de infecção por bactérias encapsuladas decorre da perda funcional do baço, o que sustenta a profilaxia com penicilina e o calendário vacinal ampliado. As duas falsas são as pegadinhas mais rentáveis do tema: o mecanismo da anemia é hemólise, não deficiência de ferro — repor ferro aqui é erro que causa sobrecarga; e hidroxiureia reduz frequência de crise e de síndrome torácica aguda, mas não é curativa. Curativo é transplante de células-tronco hematopoéticas, e mais recentemente terapia gênica.", "explicacao_deles": "A anemia falciforme é uma doença genética caracterizada pela presença da hemoglobina S, que\nleva à deformação das hemácias, resultando em hemólise crônica e crises vaso-oclusivas. O\ndiagnóstico é confirmado por eletroforese de hemoglobina, e o manejo envolve medidas\npreventivas, como vacinação e antibióticos profiláticos, além do uso de hidroxiureia para reduzir a\nfrequência das crises.\nA mutação no gene HBB leva à produção de hemoglobina S, que polimeriza sob hipóxia,\ncausando falcização das hemácias.\nA anemia falciforme é causada pela hemólise intravascular e extravascular, e não por deficiência\nde ferro.\nA eletroforese de hemoglobina demonstra aumento significativo da hemoglobina S, confirmando o\ndiagnóstico.\nA hidroxiureia é um tratamento que reduz crises vaso-oclusivas, mas o único tratamento curativo\né o transplante de medula óssea.\nDevido à disfunção esplênica, os pacientes têm maior risco de infecções por Streptococcus\npneumoniae e Haemophilus influenzae.", "atualizacao_de_diretriz": "Item ANULADO pela banca — e por defeito formal, não de conteúdo: duas alternativas com o mesmo conjunto de afirmativas. Também conferir que os pontos de corte de hemoglobina da OMS mudaram em 2024.", "fonte_citada": "PCDT da Doença Falciforme (Ministério da Saúde); Medicina Interna de Harrison", "fonte_ano": "2024", "referencias": ["NAOUM, Paulo César. Hemoglobinopatias: clínica, laboratórios, diagnóstico molecular e\ntratamento. São Paulo: Editora Sarvier, 2014.", "SERJEANT, Graham R. Sickle Cell Disease. Oxford: Oxford University Press, 2019.", "BRASIL. Ministério da Saúde. Protocolo Clínico e Diretrizes Terapêuticas – Doença Falciforme.\nBrasília, 2022."], "imagens": []}, {"id": "CI2-2025.1-c01-q15", "componente": "CI", "tema": "transtornos-somaticos", "subtema": "transtorno conversivo — diagnóstico por achado positivo, não por exclusão", "fonte_arquivo": "CI2-2025.1.pdf", "numero_no_caderno": "15", "banca_origem": "FESAR", "enunciado": "(FESAR) Uma adolescente de 15 anos foi encaminhada ao CAPS (Centro de Atenção\nPsicossocial) devido a episódios recorrentes de paralisia temporária em um dos membros\ninferiores e dificuldades para andar, sem causa orgânica aparente. Durante a consulta, a paciente\nrelatou ansiedade intensa e estresse relacionado a situações familiares e escolares. Ao exame\nclínico, não foram observadas alterações neurológicas ou musculares. A paciente também\napresentou crises de choro frequentes e hipersensibilidade emocional.\nAnalise as afirmativas a seguir:\nI. O transtorno conversivo é caracterizado por sintomas neurológicos, como paralisia, sem\nexplicação médica, frequentemente associados a estresse psicológico.\nII. A ansiedade e o estresse emocional são fatores comuns que podem desencadear os sintomas\nobservados no transtorno conversivo.\nIII. O diagnóstico do transtorno conversivo é confirmado apenas após a exclusão de qualquer\ncondição médica orgânica que possa justificar os sintomas.\nIV. O tratamento para transtorno conversivo geralmente envolve psicoterapia para ajudar a\npaciente a lidar com o estresse e os conflitos emocionais.\nCom base nisso, podemos julgar que as afirmativas", "alts": [{"texto": "III e IV estão corretas.", "porque_cai": "Errada: deixa de fora as duas afirmativas mais sólidas do conjunto (a definição do quadro e o papel do estresse) e inclui a que trata o conversivo como diagnóstico de exclusão."}, {"texto": "I, II e IV estão corretas.", "porque_cai": "Correta: reúne a definição do transtorno, o estresse como desencadeante e a psicoterapia como tratamento — sem incluir a afirmativa do diagnóstico por exclusão."}, {"texto": "I, II e III estão corretas.", "porque_cai": "Errada por um item só, e é o item que a prova está testando: inclui a afirmativa de que o diagnóstico se confirma apenas após excluir toda causa orgânica, o que o DSM-5 abandonou em favor do achado positivo de incompatibilidade."}, {"texto": "II, III e IV estão corretas.", "porque_cai": "Errada: também carrega a afirmativa do diagnóstico por exclusão e descarta a definição do próprio transtorno."}], "correta_id": 1, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Conversivo não é diagnóstico de exclusão. Ele exige um achado POSITIVO de incompatibilidade entre o exame e a neuroanatomia — por exemplo o sinal de Hoover na paresia de membro inferior.", "explicacao_minha": "Três das quatro afirmativas são pacíficas: o quadro é neurológico sem explicação médica, estresse psicológico costuma estar presente como fator desencadeante, e o tratamento é psicoterapia, com fisioterapia e educação sobre o diagnóstico. A afirmativa que cai é a que chama o conversivo de diagnóstico de exclusão. Essa era a lógica antiga; o DSM-5 mudou o eixo e passou a exigir demonstração POSITIVA de incompatibilidade entre os sinais e o funcionamento neurológico conhecido. Isso não é preciosismo de manual: diagnóstico só por exclusão gera investigação infinita, atrasa o tratamento e reforça a doença. E vale segurar a diferença com os vizinhos: no conversivo não há produção intencional; no factício há produção intencional sem ganho externo; na simulação há produção intencional COM ganho externo.", "explicacao_deles": "As afirmativas I, II e IV estão corretas. O transtorno conversivo envolve sintomas neurológicos\nsem explicação médica (afirmativa I), frequentemente relacionados ao estresse (afirmativa II), e o\ntratamento é focado em psicoterapia (afirmativa IV). A afirmativa III está incorreta, pois o\ndiagnóstico é baseado nos sintomas clínicos, sendo necessária a exclusão de outras condições\nmédicas, mas não \"confirmado apenas após a exclusão\".", "atualizacao_de_diretriz": "", "fonte_citada": "DSM-5-TR — American Psychiatric Association", "fonte_ano": "2022", "referencias": ["BOTEGA, Neury J. Prática psiquiátrica no hospital geral. Grupo A, 2017. E-book. ISBN\n9788582714317. Disponível em:\nhttps://integrada.minhabiblioteca.com.br/#/books/9788582714317/. Acesso em: 10 abr. 2025.", "FIRST, Michael B. Manual de diagnóstico diferencial do DSM-5. Grupo A, 2015. E-book. ISBN\n9788582712078. Disponível em:\nhttps://integrada.minhabiblioteca.com.br/#/books/9788582712078/. Acesso em: 10 abr. 2025."], "imagens": []}, {"id": "HAM7-2025.1-c01-q01", "componente": "HAM", "tema": "ham-oxigenoterapia", "subtema": "máscara não reinalante — qual FiO2 ela entrega e quando indicar", "fonte_arquivo": "HAM7-2025.1.pdf", "numero_no_caderno": "01", "banca_origem": "IESVAP", "enunciado": "(IESVAP) Uma criança de 6 anos é levada ao Pronto Socorro Infantil com quadro de desconforto\nrespiratório intenso após uma crise de asma. Ao exame, apresenta respiração rápida e difícil, uso\nde musculatura acessória, tiragem intercostal e cianose de extremidades. Os sinais vitais são:\nFrequência respiratória (FR): 48 irpm (VR: até 30 irpm)\nFrequência cardíaca (FC): 135 bpm (VR: até 120 bpm)\nSaturação de oxigênio (SpO₂): 88% (VR: ≥ 95%)\nPressão arterial (PA): 90/58 mmHg (VR: PAS ≥ 90 mmHg; PAD ≥ 50 mmHg)\nDiante do quadro, o médico inicia a oxigenoterapia com máscara não reinalante, visando\nestabilização da criança.\nQual é a principal justificativa para o uso desse modo ventilatório nesse contexto?", "alts": [{"texto": "A máscara não reinalante deve ser substituída imediatamente por intubação orotraqueal, pois não\nhá benefício clínico em oxigenar antes de ventilar.", "porque_cai": "Errada: oxigenar antes de ventilar é o que dá margem de segurança para preparar material, equipe e droga. Trocar direto por intubação, sem pré-oxigenar, aumenta o risco do procedimento."}, {"texto": "A máscara não reinalante é indicada em quadros leves, pois fornece cerca de 50% de oxigênio, o\nque mantém a criança dentro de parâmetros aceitáveis.", "porque_cai": "Errada no número e na indicação: com reservatório cheio e fluxo alto o dispositivo entrega perto de 90% de oxigênio, não cerca de 50%, e o cenário aqui é hipoxemia grave, não quadro leve."}, {"texto": "A máscara não reinalante fornece a mais alta concentração de oxigênio disponível, sendo\nindicada em casos de hipoxemia grave e desconforto respiratório significativo.", "porque_cai": "Correta: é a maior concentração de oxigênio disponível sem ventilação assistida, exatamente para hipoxemia grave com desconforto respiratório."}, {"texto": "O uso da máscara não reinalante deve ser evitado na asma grave, pois pode causar retenção de\nCO₂ e piora respiratória.", "porque_cai": "Errada: retenção de CO2 induzida por oxigênio é raciocínio do adulto com doença pulmonar obstrutiva crônica. Na criança com asma grave, negar oxigênio por esse medo é o erro perigoso."}], "correta_id": 2, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Máscara não reinalante é a maior FiO2 que se consegue sem ventilar: reservatório cheio e fluxo alto entregam perto de 90%. É o dispositivo da hipoxemia grave que ainda respira.", "explicacao_minha": "A escada da oferta de oxigênio é a espinha do tema. Cânula nasal de baixo fluxo entrega pouco e depende muito do padrão respiratório. Máscara simples sobe um degrau. Máscara de Venturi entrega FiO2 previsível, e é isso que a torna útil quando você precisa titular. A não reinalante, com reservatório e fluxo alto o suficiente para o balão não colabar, é o topo dessa escada — perto de 90% de oxigênio — e é o dispositivo do paciente hipoxêmico grave que ainda tem esforço respiratório eficaz. Duas armadilhas do tema: retenção de CO2 por oxigênio é preocupação do adulto com DPOC, não da criança asmática, e oxigenar bem é justamente o que compra tempo para preparar uma via aérea com segurança, em vez de intubar às pressas.", "explicacao_deles": "A máscara não reinalante fornece a mais alta concentração de oxigênio disponível, sendo\nindicada em casos de hipoxemia grave e desconforto respiratório significativo.\n\u0000 Comentário: Correta. Permite oferta de FiO₂ entre 85–95%, sendo apropriada em quadros com\nsaturação abaixo de 90%, como no caso apresentado, auxiliando na reversão rápida da\nhipoxemia.\nA máscara não reinalante é indicada em quadros leves, pois fornece cerca de 50% de\noxigênio, o que mantém a criança dentro de parâmetros aceitáveis.\n\u0000 Comentário: Incorreta. A FiO₂ fornecida é bem maior que 50% e sua indicação é para quadros\ngraves, como este, com sinais de insuficiência respiratória.\nO uso da máscara não reinalante deve ser evitado na asma grave, pois pode causar\nretenção de CO₂ e piora respiratória.\n\u0000 Comentário: Incorreta. A máscara não reinalante não prejudica a eliminação de CO₂. É\nindicada como suporte inicial de oxigenação enquanto se avalia a resposta clínica.\nA máscara não reinalante deve ser substituída imediatamente por intubação orotraqueal,\npois não há benefício clínico em oxigenar antes de ventilar.\n\u0000 Comentário: Incorreta. A intubação é medida extrema, indicada somente após falha nas\nintervenções não invasivas. O uso da máscara é etapa essencial no suporte inicial.\nReferências bibliográficas:\nSilva, L. R. et al. (Eds.). Tratado de Pediatria (5ª ed.). São Paulo: Manole, 2022.\nSBP. (2021). Abordagem do desconforto respiratório agudo em crianças. Departamento\nde Pneumologia.\nAmerican Heart Association. (2020). Pediatric Advanced Life Support Manual (PALS).", "atualizacao_de_diretriz": "A referência vigente do PALS é a de 2025 (AHA em conjunto com a AAP), que substituiu a de 2020 citada na época desta prova. A escada de oferta de oxigênio não mudou; o que vale conferir na versão nova são os alvos de saturação e o lugar da cânula de alto fluxo.", "fonte_citada": "PALS — AHA; Oxygen therapy for children (manual da OMS)", "fonte_ano": "2016", "referencias": [], "imagens": []}, {"id": "HAM7-2025.1-c01-q02", "componente": "HAM", "tema": "ham-choque", "subtema": "reconhecer o tipo de choque pelo mecanismo — perda de volume por gastroenterite", "fonte_arquivo": "HAM7-2025.1.pdf", "numero_no_caderno": "02", "banca_origem": "UNIFIPMOC", "enunciado": "(UNIFIPMOC) Uma criança de 6 anos é levada ao Pronto Socorro Infantil, com quadro de febre\nde 37.7-37.8º C, associado a vômitos e diarreia nos últimos 2 dias. A mãe relata que hoje\napresentou 6 episódios de diarreia líquida sem sangue ou muco, vários episódios de vômito e\nredução significativa do volume urinário. Na escola, outros colegas encontram-se com os\nmesmos sintomas. Criança na admissão apresentava-se: prostrada, pálida, olhos fundos, boca\nseca, extremidades frias e tempo de enchimento capilar de 4 segundos. Frequência cardíaca de\n160 bpm, pressão arterial de 85/50 mmHg e frequência respiratória de 38 irpm.\nQual é o tipo mais provável de choque apresentado pela criança?", "alts": [{"texto": "Choque séptico.", "porque_cai": "Errada: séptico exigiria foco infeccioso com resposta inflamatória sistêmica dominando o quadro. A febre baixa acompanha a gastroenterite e não explica o colapso circulatório melhor do que a perda de volume documentada."}, {"texto": "Choque hipovolêmico.", "porque_cai": "Correta: há via de perda clara — vômitos, diarreia líquida e queda do débito urinário — que é a definição de choque hipovolêmico."}, {"texto": "Choque obstrutivo.", "porque_cai": "Errada: obstrutivo pede uma barreira mecânica ao enchimento ou à ejeção, como pneumotórax hipertensivo ou tamponamento, e nada no caso aponta para isso."}, {"texto": "Choque cardiogênico.", "porque_cai": "Errada: cardiogênico traria sinais de congestão, como hepatomegalia, estertores e ritmo de galope — e a reposição volêmica, que aqui é o tratamento, ali pioraria o quadro."}], "correta_id": 1, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Vômito e diarreia com débito urinário caindo é perda de volume. Choque hipovolêmico é o mais comum na criança, e o tratamento começa por repor volume isotônico.", "explicacao_minha": "O caminho mais seguro para classificar choque na criança é ir pelo mecanismo, não pela pressão arterial — que na criança cai tarde. Aqui há uma via de perda explícita e mensurável: dois dias de vômito e seis episódios de diarreia líquida, com redução do volume urinário. Isso é hipovolemia. Vale fixar o contraste com os outros três: no distributivo o volume está no lugar errado por vasodilatação (sepse, anafilaxia); no cardiogênico a bomba falha e o volume extra piora; no obstrutivo algo impede o enchimento ou a ejeção (pneumotórax hipertensivo, tamponamento). A febre de 37,7–37,8 °C aqui é acompanhante da gastroenterite, e não desloca o diagnóstico para choque séptico — a história de perda é que manda.", "explicacao_deles": "Alternativa correta: Choque hipovolêmico. A criança apresenta sinais de hipoperfusão, como\ntaquicardia, palidez, extremidades frias e tempo de enchimento capilar prolongado, além do\ncontexto clínico de perdas gastrointestinais (vômitos e diarreia), que frequentemente levam a\nchoque hipovolêmico. Essa é a causa mais comum de choque em pediatria.\nAlternativa: Choque distributivo – Incorreta, pois nesse tipo de choque, como na sepse, há\nvasodilatação, o que resulta em extremidades quentes e pulsos amplos, diferentemente do caso\napresentado.\nAlternativa: Choque cardiogênico – Incorreta, pois o choque cardiogênico costuma estar\nassociado a sinais de insuficiência cardíaca, como estertores pulmonares, hepatomegalia e\ndificuldade respiratória importante, o que não foi descrito no caso.\nAlternativa: Choque obstrutivo – Incorreta, pois esse tipo de choque ocorre em situações como\npneumotórax hipertensivo ou tamponamento cardíaco, geralmente acompanhados de sinais\ncomo turgência jugular e pulso paradoxal, que não são observados na criança do caso.", "atualizacao_de_diretriz": "A versão vigente do PALS é a de 2025, feita pela AHA junto com a AAP, e substitui a de 2020. A classificação por mecanismo permanece; alvos e volumes de reposição devem ser lidos na versão nova.", "fonte_citada": "PALS — AHA", "fonte_ano": "2020", "referencias": ["American Heart Association. Pediatric Advanced Life Support (PALS) Provider Manual.\nDallas, TX: American Heart Association; 2020."], "imagens": []}, {"id": "HAM7-2025.1-c01-q04", "componente": "HAM", "tema": "ham-choque", "subtema": "conduta imediata no choque pediátrico com hipoperfusão", "fonte_arquivo": "HAM7-2025.1.pdf", "numero_no_caderno": "04", "banca_origem": "UNIVAÇO", "enunciado": "(UNIVAÇO) Menino de 6 anos de idade é admitido na emergência com febre alta, taquicardia,\nhipotensão, extremidades frias e perfusão periférica comprometida. Ao avaliar o histórico, os\nsinais e sintomas, o profissional de saúde iniciou a abordagem assertiva da criança.\nAssinale a alternativa que representa o tratamento inicial adequado dessa criança.", "alts": [{"texto": "Proceder com a intubação traqueal e iniciar reposição volêmica com solução glicosada.", "porque_cai": "Errada em duas camadas: intubar não é o primeiro passo de quem tem via aérea pérvia e o problema é circulatório, e solução glicosada não expande o intravascular — é o fluido errado para ressuscitar."}, {"texto": "Fornecer oxigênio e administrar precocemente fluidos intravenosos isotônicos.", "porque_cai": "Correta: oxigênio e fluido isotônico precoce por via intravenosa é exatamente a abertura do tratamento do choque na criança."}, {"texto": "Iniciar vasopressores como primeira linha de tratamento.", "porque_cai": "Errada na ordem: vasopressor é o passo seguinte, para quem não responde ao volume. Começar por ele eleva a pressão sem corrigir o enchimento, e mascara a reavaliação."}, {"texto": "Realizar uma transfusão sanguínea imediata para melhorar a oxigenação tecidual.", "porque_cai": "Errada: transfusão imediata só se justifica quando a capacidade de transporte de oxigênio é o problema — hemorragia ou anemia grave — o que este caso não descreve."}], "correta_id": 1, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Choque na criança: oxigênio, acesso e cristaloide isotônico em bólus, reavaliando a cada bólus. Vasopressor entra quando o volume não sustenta. Soro glicosado não é fluido de ressuscitação.", "explicacao_minha": "Febre alta com taquicardia, hipotensão, extremidades frias e má perfusão periférica é choque com hipoperfusão instalada, e a sequência inicial é a mesma independentemente do tipo: oxigênio, acesso vascular rápido — periférico ou intraósseo se demorar — e bólus de cristaloide isotônico com reavaliação depois de cada um. O detalhe que a prova cobra é a natureza do fluido: solução glicosada se distribui pela água corporal total e praticamente não expande o intravascular, além de agravar hiperglicemia; o que expande é solução isotônica. E a ordem importa: vasopressor antes de volume trata o número da pressão sem corrigir o enchimento, e transfusão só entra quando o problema é capacidade de transporte de oxigênio, isto é, sangramento ou anemia grave.", "explicacao_deles": "A administração precoce de fluidos intravenosos isotônicos em bolus é uma abordagem\nfundamental no tratamento do choque distributivo, incluindo o choque séptico em crianças. Essa\nmedida busca restaurar o volume intravascular, melhorar a perfusão tecidual e corrigir a\nhipotensão. O suporte com fluidos deve ser iniciado rapidamente, sendo uma intervenção crucial\nnas primeiras horas do choque séptico, antes mesmo da confirmação microbiológica.\nReferência bibliográfica: \nAmerican Heart Association. Suporte Avançado de Vida em Pediatria. Livro do profissional de\nsaúde. 2021.", "atualizacao_de_diretriz": "PALS 2025 (AHA e AAP) substituiu a versão de 2020, e há diretriz pediátrica da Surviving Sepsis Campaign de 2026, além dos critérios Phoenix de sepse pediátrica (2024). A sequência oxigênio–acesso–cristaloide permanece; volumes, alvos e o momento do vasopressor devem ser conferidos nas versões novas.", "fonte_citada": "PALS — AHA; Surviving Sepsis Campaign pediátrica", "fonte_ano": "2020", "referencias": [], "imagens": []}, {"id": "HAM7-2025.1-c01-q05", "componente": "HAM", "tema": "ham-choque", "subtema": "choque compensado — a pressão normal não exclui choque na criança", "fonte_arquivo": "HAM7-2025.1.pdf", "numero_no_caderno": "05", "banca_origem": "BANCO AFYA", "enunciado": "(BANCO AFYA) Um menino de 5 anos, previamente saudável, chega ao pronto atendimento após\n12 horas de febre alta, vômitos e dor abdominal difusa. Os pais relatam que ele está mais\nsonolento, recusando líquidos e urinando pouco. Ao exame, apresenta: FC: 158 bpm, FR: 30 irpm,\npressão arterial média (PAM): 66 mmHg, temperatura: 38,4 ºC, pulsos periféricos finos e de\nenchimento lento, tempo de enchimento capilar de 3 segundos, extremidades frias, mas sem\ncianose. Apresenta turgor diminuído, mucosas secas e sinais de desidratação.\nQual hipótese é mais compatível com o estado atual da criança?", "alts": [{"texto": "Sepse sem instabilidade hemodinâmica, considerando a ausência de hipotensão e de alteração\nrespiratória.", "porque_cai": "Errada: chamar de sepse sem instabilidade ignora que há instabilidade — pulso fino, enchimento capilar lentificado, extremidades frias e sonolência são sinais de hipoperfusão, mesmo com a pressão preservada."}, {"texto": "Quadro de desidratação sem repercussão hemodinâmica, com perfusão periférica preservada e\nestabilidade clínica.", "porque_cai": "Errada, e é o distrator mais atraente: afirma perfusão preservada quando o exame descreve o contrário. Desidratação com repercussão hemodinâmica é justamente o que define este quadro."}, {"texto": "Choque hipovolêmico compensado, com manutenção da pressão arterial e sinais periféricos de\nmá perfusão.", "porque_cai": "Correta: pressão arterial mantida com sinais periféricos de má perfusão é a definição de choque compensado."}, {"texto": "Quadro infeccioso viral com febre, taquicardia fisiológica e resposta circulatória dentro dos limites\nesperados.", "porque_cai": "Errada: atribuir a taquicardia a resposta fisiológica à febre não explica pulso fino, enchimento capilar de 3 segundos, extremidades frias e sonolência."}], "correta_id": 2, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Na criança a pressão arterial é o último sinal a cair. Choque compensado se reconhece na periferia: pulso fino, enchimento capilar acima de 2 segundos, extremidade fria e sonolência — com pressão ainda normal.", "explicacao_minha": "Este é o item mais importante do tema, porque é o erro que mata: esperar hipotensão para chamar de choque. A criança compensa com taquicardia e vasoconstrição periférica intensa, e por isso mantém a pressão arterial até estar muito perto do colapso. O que denuncia o choque compensado é a periferia e o cérebro: pulso periférico fino, tempo de enchimento capilar de 3 segundos — acima do limite de 2 —, extremidades frias e nível de consciência caindo (aqui, sonolência). Somando a via de perda (12 horas de febre, vômitos, recusa de líquidos e oligúria), o quadro é choque hipovolêmico compensado, e a conduta não espera a pressão cair. A cianose ausente não tranquiliza: ela aparece tarde.", "explicacao_deles": "Quadro de desidratação sem repercussão hemodinâmica, com perfusão periférica\npreservada e estabilidade clínica.\n\u0000 Comentário: Incorreta. A criança apresenta sinais evidentes de hipoperfusão, como pulsos finos,\nTEC aumentado e sonolência. Portanto, há repercussão circulatória incompatível com essa\ndescrição.\nChoque hipovolêmico compensado, com manutenção da pressão arterial e sinais\nperiféricos de má perfusão.\n\u0000 Comentário: Correta. A PAM está preservada, mas os sinais de má perfusão são claros. Trata-\nse de um quadro clássico de choque compensado, que exige intervenção rápida.\nSepse sem instabilidade hemodinâmica, considerando a ausência de hipotensão e de\nalteração respiratória.\n\u0000 Comentário: Incorreta. Há sinais clínicos inequívocos de instabilidade, ainda que sem\nhipotensão. A presença de hipoperfusão caracteriza uma fase inicial do choque séptico.\nQuadro infeccioso viral com febre, taquicardia fisiológica e resposta circulatória dentro dos\nlimites esperados.\n\u0000 Comentário: Incorreta. A taquicardia acompanhada de sinais de hipoperfusão não é fisiológica. O\nquadro é compatível com instabilidade hemodinâmica e risco de evolução para choque\ndescompensado. \nReferências bibliográficas:\nSilva, L. R. et al. (Eds.). Tratado de Pediatria (5ª ed.). São Paulo: Manole, 2022.\nSociedade Brasileira de Pediatria. (2020). Reconhecimento e tratamento do choque em\npediatria. Departamento de Terapia Intensiva.\nPALS – American Heart Association. (2020). Pediatric Advanced Life Support Provider\nManual.", "atualizacao_de_diretriz": "A versão vigente é o PALS 2025 (AHA e AAP). O conceito de choque compensado não mudou, e continua sendo o ponto de maior rendimento do tema.", "fonte_citada": "PALS — AHA (avaliação sistemática e triângulo de avaliação pediátrica)", "fonte_ano": "2020", "referencias": [], "imagens": []}, {"id": "HAM7-2025.1-c01-q06", "componente": "HAM", "tema": "ham-desconforto-respiratorio", "subtema": "prioridade da conduta inicial no desconforto respiratório do lactente", "fonte_arquivo": "HAM7-2025.1.pdf", "numero_no_caderno": "06", "banca_origem": "BANCO AFYA", "enunciado": "(BANCO AFYA) Um lactente de 4 meses é levado à emergência com quadro de esforço\nrespiratório progressivo há dois dias, associado a alimentação prejudicada e irritabilidade. Ao\nexame, apresenta gemência, tiragem subcostal, batimento de asa de nariz e cianose periférica.\nMantém o pescoço estendido e o tronco levemente inclinado para frente, em tentativa de aliviar o\nesforço respiratório. SpO₂ de 88% em ar ambiente e frequência respiratória de 72 irpm. A ausculta\nrevela sibilos e crepitações difusas. A equipe médica inicia as intervenções de estabilização.\nQual deve ser a sequência correta das intervenções iniciais?", "alts": [{"texto": "Administração de antibiótico empírico, acesso venoso periférico e hidratação endovenosa.", "porque_cai": "Errada como primeiro passo: antibiótico e hidratação podem ser necessários depois, mas não corrigem hipoxemia nem esforço respiratório nos próximos minutos."}, {"texto": "Garantia de via aérea pérvia, oferta imediata de oxigênio suplementar e monitorização contínua.", "porque_cai": "Correta: via aérea pérvia, oxigênio imediato e monitorização contínua é a abertura da abordagem sistemática no desconforto respiratório."}, {"texto": "Aspiração de secreções, administração de antitérmico e avaliação neurológica detalhada.", "porque_cai": "Errada: antitérmico e avaliação neurológica detalhada não são a prioridade de quem tem esforço respiratório com cianose, e aspirar sem antes garantir oxigenação pode piorar a hipoxemia."}, {"texto": "Solicitação de exames laboratoriais e radiografia de tórax, administração de broncodilatadores.", "porque_cai": "Errada na ordem: exame de imagem e broncodilatador vêm depois de estabilizar. Levar um lactente com cianose para a radiologia antes de oxigenar inverte a prioridade."}], "correta_id": 1, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Na criança com esforço respiratório, a ordem é sempre a mesma: via aérea pérvia, oxigênio, monitorização. Exame e antibiótico vêm depois — nenhum deles melhora a oxigenação nos próximos minutos.", "explicacao_minha": "Gemência, tiragem subcostal, batimento de asa de nariz e cianose periférica num lactente de 4 meses formam um quadro de desconforto respiratório importante, e o pescoço estendido com tronco inclinado é postura de alívio — sinal de que a criança está trabalhando ao máximo. A questão testa prioridade, não diagnóstico. A abordagem sistemática do PALS resolve pela ordem: garantir via aérea pérvia, ofertar oxigênio e monitorizar, reavaliando em seguida. Só depois disso entram etiologia e tratamento específico. As outras opções não são erradas em si — antibiótico, radiografia e broncodilatador podem ter lugar —, elas são erradas como PRIMEIRA medida, porque nenhuma altera a oxigenação agora. E vale o alerta que o próprio caderno de recursos desta prova levantou em outro item: nível de consciência rebaixado muda o plano, porque passa a indicar falência respiratória iminente.", "explicacao_deles": "Garantia de via aérea pérvia, oferta imediata de oxigênio suplementar e monitorização\ncontínua.\n\u0000 Comentário: Correta. O texto evidencia sinais de desconforto respiratório grave. As medidas\nprioritárias incluem: abrir e manter a via aérea, oferecer oxigênio suplementar para corrigir a\nhipoxemia e monitorar continuamente os sinais vitais, seguindo a abordagem sistemática ABC\n(via aérea, respiração, circulação).\nSolicitação de exames laboratoriais e radiografia de tórax, seguida da administração de\nbroncodilatadores.\n\u0000 Comentário: Incorreta. Embora exames e broncodilatadores possam ser necessários, as\nmedidas iniciais devem priorizar a estabilização clínica imediata, antes da investigação\netiológica.\nAdministração de antibiótico empírico, acesso venoso periférico e hidratação endovenosa.\n\u0000 Comentário: Incorreta. A antibioticoterapia pode ser indicada dependendo da causa, mas não faz\nparte da abordagem inicial do desconforto respiratório. O acesso venoso e a hidratação são\nsecundários à estabilização respiratória.\nAspiração de secreções, administração de antitérmico e avaliação neurológica detalhada.\n\u0000 Comentário: Incorreta. Essas ações podem ser necessárias em contextos específicos, mas\nnão compõem a prioridade na sequência de manejo inicial do desconforto respiratório grave.\nReferência Bibliográfica:\n1. Silva, L. R., Solé, D., Silva, C. A. A., Constantino, C. F., Liberal, E. F., & Lopez, F. A.\n(Eds.). (2022). Tratado de Pediatria (5ª ed.). São Paulo: Editora Manole. .​\n2. Simon Junior, H., Abramovici, S., Reis, A. G. A. C., Oldenburg Neto, C. F., Nogueira, K.\nT., Reis, M. C., & Amantéa, S. L. (2017). Crupe Viral e Bacteriano. Departamento de\nEmergências, Sociedade Brasileira de Pediatria. \n3. Departamento Científico de Pneumologia, Sociedade Brasileira de Pediatria. (2017).\nSibilância Recorrente do Lactente e Pré-escolar.", "atualizacao_de_diretriz": "PALS 2025 (AHA e AAP) é a versão vigente e substitui a de 2020. A ordem da abordagem inicial permanece.", "fonte_citada": "PALS — AHA (abordagem sistemática: avaliar, identificar, intervir)", "fonte_ano": "2020", "referencias": [], "imagens": []}, {"id": "HAM7-2025.1-c01-q10", "componente": "HAM", "tema": "ham-oxigenoterapia", "subtema": "escolha do dispositivo quando há rebaixamento de consciência — por que a banca anulou", "fonte_arquivo": "HAM7-2025.1.pdf", "numero_no_caderno": "10", "banca_origem": "BANCO AFYA", "enunciado": "(BANCO AFYA) Lactente de 6 meses, previamente saudável, é levado à unidade de pronto\natendimento com histórico de taquipneia, tosse e recusa alimentar há dois dias. Ao exame,\napresenta gemência, tiragem subcostal, batimento de asa do nariz, FR: 72 irpm, FC: 180 bpm,\nSatO₂: 88% em ar ambiente, e temperatura axilar de 37,8 ºC. Está letárgico e hiporresponsivo aos\nestímulos. A ausculta pulmonar revela estertores difusos e sibilância bilateral. Após\nposicionamento, aspiração de vias aéreas e monitorização, a equipe decide iniciar oxigenoterapia.\nQual é a forma de oxigenoterapia mais indicada neste momento para esse paciente?", "alts": [{"texto": "Máscara facial com reservatório, permitindo alta oferta de oxigênio em curto espaço de tempo.", "porque_cai": "Máscara com reservatório entrega alta concentração de oxigênio rápido, o que é atraente aqui — mas é mal tolerada por lactente e não oferece suporte ventilatório, que é o que a letargia passa a exigir."}, {"texto": "Ventilação com CPAP contínuo, utilizando pressão fixa por meio de interface nasal adequada.", "porque_cai": "Pressão positiva contínua por interface nasal é uma escolha defensável em bronquiolite grave, e é parte do motivo pelo qual a questão comportava mais de uma resposta."}, {"texto": "Cateter nasal de baixo fluxo, com ajuste de volume conforme tolerância e melhora progressiva.", "porque_cai": "Cateter nasal de baixo fluxo é insuficiente para hipoxemia com esforço grave: entrega pouca fração inspirada e depende do padrão respiratório do paciente."}, {"texto": "Cânula nasal de alto fluxo, com mistura aquecida e pressão positiva contínua nas vias aéreas.", "porque_cai": "Era a marcada pela banca e é adequada em desconforto moderado a grave — mas exige nível de consciência preservado, e num paciente letárgico o risco de aspiração a contraindica. É exatamente esse o argumento que anulou a questão."}], "correta_id": 3, "parecer": "anulada", "nota_da_anulacao": "Anulada pela banca. O recurso mostrou que, com letargia e hiporresponsividade, TODAS as quatro opções são inadequadas: a marcada exige sensório preservado. Fica no banco como material de estudo e fora do sorteio do simulado.", "regra_de_bolso": "Cânula nasal de alto fluxo exige nível de consciência preservado. Criança letárgica com esforço respiratório não é caso de escolher dispositivo: é falência respiratória iminente, e o que ela precisa é de suporte ventilatório com via aérea protegida.", "explicacao_minha": "Este item é mais útil anulado do que valeria respondido, porque ele ensina o raciocínio que decide o caso. O lactente tem desconforto grave — frequência respiratória de 72, saturação de 88% em ar ambiente, gemência, tiragem, batimento de asa de nariz — e, sobretudo, está letárgico e hiporresponsivo. Rebaixamento de consciência num quadro respiratório não é detalhe: é o sinal que transforma desconforto em falência iminente, e a partir dele a pergunta deixa de ser qual dispositivo de oxigênio e passa a ser quando ventilar. A cânula de alto fluxo, que a banca havia marcado, é excelente em desconforto moderado a grave com sensório preservado, porque oferece oxigênio aquecido e algum grau de pressão positiva — mas em paciente letárgico aumenta o risco de aspiração. Foi esse o argumento aceito no recurso: nenhuma das quatro opções serve para um paciente com esse nível de consciência.", "explicacao_deles": "Cateter nasal de baixo fluxo, com ajuste de volume conforme tolerância e melhora\nprogressiva.\n\u0000 Comentário: Incorreta. Apesar de ser utilizado em quadros leves, não é suficiente em pacientes\ncom sinais de desconforto grave e hipoxemia persistente.\nMáscara facial com reservatório, permitindo alta oferta de oxigênio em curto espaço de\ntempo.\n\u0000 Comentário: Incorreta. Essa modalidade não é bem tolerada por lactentes e não oferece suporte\nventilatório adicional, o que limita sua eficácia neste cenário.\nCânula nasal de alto fluxo, com mistura aquecida e pressão positiva contínua nas vias\naéreas.\n\u0000 Comentário: Correta. Essa é a estratégia preferida em desconforto moderado a grave,\nassociando oxigenoterapia e suporte não invasivo de forma eficaz e bem tolerada.\nVentilação com CPAP contínuo, utilizando pressão fixa por meio de interface nasal\nadequada.\n\u0000 Comentário: Incorreta. Apesar de eficaz em casos específicos, o uso imediato de CPAP não é a\nprimeira escolha em pacientes com esforço respiratório mantido.\nReferências bibliográficas:\nSilva, L. R. et al. (Eds.). Tratado de Pediatria (5ª ed.). São Paulo: Manole, 2022.\nSBP – Departamento de Pneumologia. (2021). Abordagem do lactente com desconforto\nrespiratório agudo nas primeiras horas de atendimento.\nwww.sbp.com.br", "atualizacao_de_diretriz": "O parecer do recurso citou PALS 2020 e 2022; a versão vigente hoje é o PALS 2025 (AHA e AAP). O conceito usado — rebaixamento de consciência indica falência respiratória iminente — permanece.", "fonte_citada": "PALS — AHA; caderno de recursos da N1 Específica 2025.1 (HAM VII), parecer de anulação", "fonte_ano": "2025", "referencias": [], "imagens": []}, {"id": "IESC7-2025.1-c01-q04", "componente": "IESC", "tema": "iesc-hepatites", "subtema": "hepatite A — transmissão, tratamento e prevenção na atenção primária", "fonte_arquivo": "IESC7-2025.1.pdf", "numero_no_caderno": "04", "banca_origem": "AFYA Paraíba", "enunciado": "(AFYA Paraíba) Um homem de 35 anos procura a Unidade Básica de Saúde (UBS) com fadiga,\nnáuseas e dor em hipocôndrio direito há uma semana. Relata que recentemente esteve viajando\npara uma região com baixa cobertura sanitária e teve episódios de diarreia. Ao exame, apresenta\nescleras ictéricas, hepatomegalia dolorosa e febre baixa. Os exames laboratoriais mostram\nelevação de transaminases (AST 450 U/L e ALT 320 U/L), bilirrubinas totais 3 mg/dl e IgM positivo\npara VHA.\nCom base na epidemiologia, clínica e conduta das hepatites virais na APS, analise as afirmativas\nabaixo.\nI. A principal via de transmissão da hepatite A é fecal-oral, sendo a contaminação por água e\nalimentos a principal fonte de infecção.\nII. O tratamento da hepatite A consiste em antivirais, medidas de suporte e repouso, com uma\nevolução autolimitada, na maioria dos casos.\nIII. A vacinação contra hepatite A faz parte do calendário vacinal e é indicada especialmente para\ngrupos de risco e residentes em áreas endêmicas.\nIV. A forma aguda da doença costuma ter evolução benigna, com resolução espontânea, sendo o\nmanejo baseado em medidas de suporte e orientações de prevenção.\nEstá correto apenas o que se afirma em:", "alts": [{"texto": "I, III e IV.", "porque_cai": "Correta: reúne a transmissão fecal-oral, a vacinação como prevenção e a evolução benigna com manejo de suporte — sem incluir a afirmativa que fala de antiviral."}, {"texto": "II e III.", "porque_cai": "Errada: deixa de fora a transmissão fecal-oral, que é o fato mais estabelecido do tema, e inclui a afirmativa do antiviral."}, {"texto": "I, II e III.", "porque_cai": "Errada por um item, e é o item que a prova está testando: inclui a afirmativa que coloca antiviral no tratamento da hepatite A."}, {"texto": "II e IV.", "porque_cai": "Errada: também carrega a afirmativa do antiviral e descarta a transmissão fecal-oral."}], "correta_id": 0, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Hepatite A é fecal-oral, autolimitada e SEM antiviral: o tratamento é suporte. A vacina está no calendário infantil e é a prevenção que muda epidemiologia.", "explicacao_minha": "IgM positivo para o vírus da hepatite A com icterícia, dor em hipocôndrio direito e transaminases na casa das centenas fecha hepatite A aguda, e o contexto de viagem para área com saneamento precário dá a via. Três afirmativas do conjunto são pacíficas: a transmissão é fecal-oral, com água e alimentos como fonte principal; a vacina integra o calendário e é reforçada em grupos de risco e áreas endêmicas; e a forma aguda costuma ter evolução benigna, com resolução espontânea e manejo de suporte. A que cai é a que inclui antiviral no tratamento — não existe antiviral para hepatite A, e essa é a pegadinha mais rentável do tema, porque a afirmativa mistura uma parte verdadeira (suporte e repouso, evolução autolimitada) com uma falsa. Serve de alerta geral: numa questão de assertivas, uma frase parcialmente correta é falsa por inteiro.", "explicacao_deles": "Analisando as afirmativas item a item.\nItem I - correto. A hepatite A é transmitida por via fecal-oral, geralmente por consumo de água ou\nalimentos contaminados, sendo essa a principal forma de disseminação da doença.\nItem II - incorreto. A hepatite A não tem tratamento específico com antivirais ou hepatoprotetores.\nO manejo consiste em medidas de suporte, hidratação e controle dos sintomas.\nItem III - correto. A vacinação contra hepatite A está disponível no calendário vacinal do SUS para\ngrupos de risco, incluindo crianças, pessoas com doenças hepáticas crônicas e viajantes para\náreas endêmicas.\nItem IV - correto. A hepatite A geralmente apresenta um curso benigno e autolimitado, sem\ncronificação, com resolução espontânea na maioria dos casos. A orientação do paciente deve\nenfatizar repouso, hidratação e medidas de prevenção, como higiene adequada e vacinação.", "atualizacao_de_diretriz": "", "fonte_citada": "PCDT de Hepatite A / Hepatites Virais — Ministério da Saúde; Calendário Nacional de Vacinação", "fonte_ano": "2024", "referencias": ["BRASIL. Ministério da Saúde. Secretaria de Vigilância em Saúde. Protocolo Clínico e Diretrizes\nTerapêuticas para Hepatite A. Brasília: Ministério da Saúde, 2022. Disponível em:\nhttps://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/h/hepatites-virais/hepatite-a. Acesso em:\n6 mar. 2025."], "imagens": []}, {"id": "IESC7-2025.1-c01-q05", "componente": "IESC", "tema": "iesc-hanseniase", "subtema": "quem é contato de hanseníase pelo PCDT — e por que isso anulou a questão", "fonte_arquivo": "IESC7-2025.1.pdf", "numero_no_caderno": "05", "banca_origem": "AFYA Paraíba", "enunciado": "(AFYA Paraíba) Um homem de 40 anos procura a Unidade Básica de Saúde (UBS) com queixas\nde manchas na pele associadas à diminuição da sensibilidade. No exame físico, são observadas\ntrês lesões hipocrômicas, de bordas elevadas e áreas de anestesia. Ele reside com a esposa e\nrecebe visitas de sua filha de 2 anos a cada quatro meses, permanecendo com ela por um dia. A\ncriança foi vacinada com BCG ao nascimento.\nCom base no Protocolo Clínico e Diretrizes Terapêuticas da Hanseníase, analise as afirmativas a\nseguir:\nI. O diagnóstico é clínico e deve ser realizado na Atenção Primária à Saúde (APS) com base nos\nsinais dermatoneurológicos característicos, sendo a baciloscopia indicada para confirmação\ndiagnóstica em casos duvidosos.\nII. A forma clínica apresentada é classificada como paucibacilar, e o tratamento na APS deve ser\niniciado com poliquimioterapia (PQT) padronizada pelo Ministério da Saúde.\nIII. A filha, por ter recebido BCG ao nascimento e ter contato esporádico com o pai, não necessita\nde nova dose da vacina ou de acompanhamento específico.\nEstá correto apenas o que se afirma em:", "alts": [{"texto": "II e III.", "porque_cai": "Combina uma afirmativa verdadeira (a classificação paucibacilar com tratamento na atenção primária) com a que trata da filha, cuja resposta depende de ela ser ou não contato domiciliar — o ponto que ficou ambíguo."}, {"texto": "I e III.", "porque_cai": "Junta o diagnóstico clínico, que é verdadeiro, com a afirmativa sobre a filha, que se tornou defensável pela definição de contato do protocolo."}, {"texto": "I e II.", "porque_cai": "Reúne as duas afirmativas que ninguém contesta: diagnóstico clínico com baciloscopia para casos duvidosos, e classificação paucibacilar com poliquimioterapia iniciada na atenção primária."}, {"texto": "I.", "porque_cai": "Reduz o conjunto a uma única afirmativa verdadeira e descarta a classificação operacional, que também está correta no caso."}], "correta_id": 2, "parecer": "anulada", "nota_da_anulacao": "Anulada pela banca. O parecer citou a definição de contato do PCDT — quem reside ou conviveu no domicílio nos últimos cinco anos — e mostrou que a filha, com visitas de um dia a cada quatro meses, não se encaixa. Com isso a questão passou a ter mais de uma resposta defensável. Fica no banco e fora do sorteio.", "regra_de_bolso": "Contato de hanseníase, pelo PCDT, é quem RESIDE ou residiu, convive ou conviveu no domicílio com o doente nos últimos cinco anos. Visita esporádica não entra nessa definição — e é isso que decide a conduta com a criança.", "explicacao_minha": "Três lesões hipocrômicas com áreas de anestesia dão o diagnóstico clínico e a classificação operacional: até cinco lesões é paucibacilar, e o tratamento com poliquimioterapia começa na própria atenção primária. Dois pontos do tema são sólidos: o diagnóstico é clínico, feito pelos sinais dermatoneurológicos, com baciloscopia reservada aos casos duvidosos; e a conduta de vigilância de contato inclui exame dermatoneurológico e dose de BCG conforme a situação vacinal. O nó da questão é a definição de contato. O protocolo fala de quem reside ou conviveu no âmbito domiciliar nos últimos cinco anos — e a filha visita por um dia a cada quatro meses, três vezes por ano. Pela letra do protocolo ela não é contato domiciliar, o que torna defensável a afirmativa que dispensa acompanhamento específico. Foi exatamente esse o argumento aceito, e a questão passou a ter mais de uma resposta possível.", "explicacao_deles": "Afirmativa I – Correta. O diagnóstico da hanseníase é essencialmente clínico, baseado na\nidentificação de lesões de pele com alteração de sensibilidade (hipoestesia ou anestesia),\nespessamento de nervos periféricos e/ou presença de bacilos álcool-ácido resistentes. A\nbaciloscopia é indicada para confirmação diagnóstica em casos duvidosos. \nAfirmativa II – Correta. A presença de três lesões hipocrômicas, de bordas elevadas e áreas de\nanestesia sugere a forma paucibacilar da hanseníase, caracterizada por até cinco lesões de pele.\nO tratamento na APS deve ser iniciado com poliquimioterapia (PQT) padronizada pelo Ministério\nda Saúde, que inclui rifampicina e dapsona para casos paucibacilares. \nAfirmativa III – Errada. Embora a filha tenha recebido a vacina BCG ao nascimento e tenha\ncontato esporádico com o pai, é recomendado que todos os contatos domiciliares e íntimos de\npacientes com hanseníase sejam avaliados clinicamente e acompanhados periodicamente,\nindependentemente da frequência de contato. A revacinação com BCG pode ser considerada\npara contatos que não apresentem cicatriz vacinal, visando aumentar a proteção contra a\ndoença.", "atualizacao_de_diretriz": "", "fonte_citada": "PCDT da Hanseníase — Portaria SCTIE/MS nº 67, de 07/07/2022; caderno de recursos da N1 Específica 2025.1 (IESC VII)", "fonte_ano": "2022", "referencias": ["BRASIL. Ministério da Saúde. Secretaria de Vigilância em Saúde. Protocolo Clínico e Diretrizes\nTerapêuticas da Hanseníase. Brasília: Ministério da Saúde, 2022. Disponível em:\nhttps://bvsms.saude.gov.br/bvs/publicacoes/protocolo_clinico_diretrizes_terapeuticas_hanseniase\n.pdf. Acesso em: 6 mar. 2025."], "imagens": []}, {"id": "IESC7-2025.1-c01-q07", "componente": "IESC", "tema": "iesc-tuberculose", "subtema": "investigação de contatos — sintomático procura doença ativa, assintomático procura infecção latente", "fonte_arquivo": "IESC7-2025.1.pdf", "numero_no_caderno": "07", "banca_origem": "AFYA Ipatinga", "enunciado": "(AFYA Ipatinga) Durante uma visita domiciliar, uma médica de família e comunidade avalia os\ncontatos domiciliares de uma mulher que iniciou o tratamento para tuberculose pulmonar. Na\nconsulta, o marido da paciente relata tosse há um mês, enquanto o filho do casal, de 18 anos,\nestá assintomático e não apresenta alterações ao exame físico.\nCom base nas recomendações do Ministério da Saúde  para investigação de tuberculose em\ncontatos, assinale a alternativa correta quanto à investigação propedêutica inicial do marido e do\nfilho da paciente.", "alts": [{"texto": "Marido: radiografia de tórax e teste rápido molecular. Filho: radiografia de tórax e prova\ntuberculínica.", "porque_cai": "Errada no sintomático: fica sem cultura, que é o exame que fecha o perfil de sensibilidade — e num contato de caso confirmado isso importa. A conduta proposta para o assintomático é aceitável."}, {"texto": "Marido: teste rápido molecular, prova tuberculínica e radiografia de tórax. Filho: prova\ntuberculínica.", "porque_cai": "Errada por pedir prova tuberculínica no sintomático: nele o alvo é doença ativa, e o teste de infecção latente não muda essa investigação nem a acelera."}, {"texto": "Marido: radiografia de tórax, teste rápido molecular e cultura para micobactérias. Filho: prova\ntuberculínica.", "porque_cai": "Correta: no marido sintomático, radiografia, teste rápido molecular e cultura; no filho assintomático, prova tuberculínica. Cada um com o exame do alvo certo."}, {"texto": "Marido: prova tuberculínica e teste rápido molecular. Filho: prova tuberculínica, radiografia de\ntórax e cultura para micobactérias.", "porque_cai": "Errada nas duas pontas: reduz a investigação do sintomático e sobrecarrega o assintomático com cultura, exame que sem sintoma nem material adequado não rende resultado."}], "correta_id": 2, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Contato COM tosse investiga doença ativa: radiografia, teste rápido molecular e cultura. Contato SEM sintoma investiga infecção latente: prova tuberculínica (ou IGRA).", "explicacao_minha": "A investigação de contato se divide por um único critério — sintoma —, e é isso que a questão cobra. O marido tosse há um mês: ele é sintomático respiratório, então o alvo é tuberculose ativa, e a investigação pede radiografia de tórax, teste rápido molecular, que dá o diagnóstico e já informa resistência à rifampicina, e cultura para micobactérias, que fecha o teste de sensibilidade. O filho de 18 anos está assintomático: nele o alvo é infecção latente, e o exame é a prova tuberculínica, ou IGRA quando disponível — com radiografia servindo para afastar doença ativa antes de tratar a latência. Inverter os dois é o erro clássico: pedir só prova tuberculínica em quem tosse atrasa o diagnóstico de um caso bacilífero, e pedir cultura em quem não tem sintoma nem escarro não produz resultado útil.", "explicacao_deles": "O marido apresenta tosse há um mês, o que indica necessidade de investigação para tuberculose\nativa com radiografia de tórax, teste rápido molecular e cultura para micobactérias. Já o filho, por\nser contato domiciliar assintomático e ter mais de 10 anos, deve ser investigado para infecção\nlatente por tuberculose (ILTB) inicialmente com a prova tuberculínica.", "atualizacao_de_diretriz": "", "fonte_citada": "Manual de Recomendações para o Controle da Tuberculose no Brasil, 2ª edição — Ministério da Saúde", "fonte_ano": "2019", "referencias": ["Ministério da Saúde. Manual de recomendações para o controle da tuberculose no Brasil, 2ª\nedição."], "imagens": []}, {"id": "IESC7-2025.1-c01-q10", "componente": "IESC", "tema": "iesc-urgencia-aps", "subtema": "triagem na atenção primária — quem sai agora para a urgência", "fonte_arquivo": "IESC7-2025.1.pdf", "numero_no_caderno": "10", "banca_origem": "UNIREDENTOR", "enunciado": "(UNIREDENTOR) Os estudantes de IESC VII estão acompanhando a triagem dos pacientes na\nUnidade Básica de Saúde Vila Bonita. Ao avaliarem quatro pacientes, juntamente com a equipe,\nficaram na dúvida de qual paciente deveria ser encaminhado ao serviço de urgência/emergência.\nMarque a assertiva que apresenta um paciente que deve ser encaminhado e ajude a equipe da\nUnidade Vila Bonita.", "alts": [{"texto": "Paciente hipertenso, confuso, com alteração na fala que iniciou subitamente há 2 horas.", "porque_cai": "Correta: alteração de fala e confusão de início súbito há duas horas é suspeita de acidente vascular cerebral, condição tempo-dependente que exige transferência imediata."}, {"texto": "Paciente com dor ao movimento e palpação do tórax, sem dor ao repouso ou história de trauma.", "porque_cai": "Errada como prioridade: dor que aparece ao movimento e à palpação, sem dor em repouso e sem trauma, sugere origem musculoesquelética e pode ser conduzida na unidade."}, {"texto": "Paciente com quadro gripal, frequência respiratória de 22 irpm e saturação de oxigênio de 96%.", "porque_cai": "Errada: frequência respiratória de 22 e saturação de 96% num quadro gripal descrevem paciente estável, que não precisa de urgência."}, {"texto": "Paciente hipertenso, com pressão arterial de 160X100 mmHg, sem sinais de lesão em órgão-\nalvo.", "porque_cai": "Errada, e é o distrator mais atraente: sem lesão aguda de órgão-alvo, pressão elevada não é emergência hipertensiva — é hipertensão a ser manejada e acompanhada na própria atenção primária."}], "correta_id": 0, "parecer": "nenhum", "nota_da_anulacao": "", "regra_de_bolso": "Déficit neurológico de início súbito é tempo-dependente: é o que sai da unidade básica agora. Número alto de pressão sem lesão de órgão-alvo não é emergência.", "explicacao_minha": "Triagem na atenção primária é priorizar por risco de perda de janela terapêutica, não por gravidade aparente do número. Confusão com alteração de fala de início súbito há duas horas é suspeita de acidente vascular cerebral, e a janela de reperfusão se conta em horas — esse paciente é transferência imediata, com a hora de início do sintoma anotada, porque é ela que define o que pode ser feito no destino. Os outros três não são tempo-dependentes: dor torácica que só aparece ao movimento e à palpação, sem dor em repouso e sem trauma, aponta para causa musculoesquelética; quadro gripal com frequência respiratória de 22 e saturação de 96% está estável; e pressão de 160 por 100 sem lesão de órgão-alvo é hipertensão a ser tratada e acompanhada na própria unidade, não crise a ser encaminhada. Esse último é o distrator mais frequente do tema: número alto assusta, mas o que define emergência hipertensiva é a lesão aguda de órgão-alvo.", "explicacao_deles": "De acordo com DUNCAN, Bruce B.; SCHMIDT, Maria I.; GIUGLIANI, Elsa R. J.; et al, em\nMedicina ambulatorial: condutas de atenção primária baseadas em evidências, os achados\nclínicos fundamentais na identificação de situações de emergência constam na tabela abaixo.\nPortanto, ao analisarmos as assertivas, a correta é: Paciente hipertenso, apresenta-se confuso,\ncom alteração na fala que iniciou subitamente há 2 horas. Na indicação consta: paciente\napresentando alteração neurológica aguda, como déficits motores, afasias, convulsões, delirium.\nIncorreta. Paciente com quadro gripal, frequência respiratória de 22 irpm e saturação de oxigênio\nde 96%. Na literatura, a indicação é frequência respiratória > 36 ou < 8 irpm ou uso de\nmusculatura acessória. A saturação de oxigênio é menor que 90%.\nIncorreta. Paciente hipertenso, com pressão arterial de 160X90 mmHg, sem sinais de lesão em\nórgão-alvo. A indicação de encaminhamento seria uma urgência ou emergência hipertensiva, com\nsinais de lesão em órgão-alvo, ou pressão sistólica < 90 mmHg.\nIncorreta. Paciente com dor ao movimento e palpação do tórax a direita, sem dor ao repouso ou\nhistória de trauma. Paciente sem precordialgia e/ou dor torácica típica ou intensa.", "atualizacao_de_diretriz": "", "fonte_citada": "Cadernos de Atenção Básica nº 28, vol. II (Acolhimento à demanda espontânea) — Ministério da Saúde; Tratado de Medicina de Família e Comunidade (Gusso)", "fonte_ano": "2013", "referencias": ["DUCAN, B, B. et al. Medicina ambulatorial: condutas de atenção primária baseadas em\nevidências. Disponível em: Minha Biblioteca, 5ª edição. Grupo A, 2022. Cap. 194."], "imagens": []}], "temas": ["anestesia-geral", "torchs-prenatal", "anemias", "glomerulopatias", "sepse", "esofago-cirurgico", "transtornos-somaticos", "ham-oxigenoterapia", "ham-choque", "ham-desconforto-respiratorio", "iesc-hepatites", "iesc-hanseniase", "iesc-tuberculose", "iesc-urgencia-aps"], "rotulos": {"pre-pos-operatorio": "Pre e pos-operatorio", "itu-adulto": "ITU no adulto", "remit": "REMIT (trauma operatorio)", "torchs-prenatal": "TORCHS e pre-natal", "anestesia-geral": "Anestesia geral", "glomerulopatias": "Glomerulopatias", "esofago-cirurgico": "Esofago cirurgico", "gastrico-cirurgico": "Gastrico cirurgico", "anemias": "Anemias e hemoglobinopatias", "transtornos-somaticos": "Transtornos somaticos", "iesc-urgencia-aps": "Urgencia na APS", "iesc-hanseniase": "Hanseniase", "iesc-tuberculose": "Tuberculose", "iesc-hepatites": "Hepatites virais", "ham-oxigenoterapia": "Oxigenoterapia pediatrica", "ham-desconforto-respiratorio": "Desconforto respiratorio", "ham-choque": "Choque pediatrico", "sepse": "Sepse"}, "composicao": {"CI": 6, "CC": 5, "IESC": 5, "HAM": 4, "INT": 0}, "itens_por_simulado": 20, "minutos_simulado": 80, "gerado_em": "2026-09-08 15:52"};
+
+/* ================= util ================= */
+var $ = function(s){ return document.querySelector(s); };
+var LETRAS = "ABCD";
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g, function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+/* Sorteio determinístico: a mesma semente dá a mesma ordem. É o que permite
+   provar por teste que a letra muda entre sementes e a correta continua correta. */
+/* xmur3 para semear + mulberry32 para gerar. O par anterior (hash s*31 e um LCG
+   simples) tinha vies MEDIDO: com sementes que diferem so no fim -- e as minhas
+   diferem, porque sao id+sessao -- a media de 30 sessoes deu 70 para a letra D
+   onde o esperado era 98, ou seja 3,4 desvios. Estes dois algoritmos espalham
+   mudanca de um caractere por todos os bits. */
+function xmur3(str){
+  var h = 1779033703 ^ str.length;
+  for (var i=0;i<str.length;i++){
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return function(){
+    h = Math.imul(h ^ (h >>> 16), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    h ^= h >>> 16;
+    return h >>> 0;
+  };
+}
+function rng(semente){
+  var a = xmur3(String(semente))();
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function embaralha(lista, semente){
+  var a = lista.slice(), r = rng(semente);
+  for (var i=a.length-1;i>0;i--){ var j = Math.floor(r()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+/* A ordem das alternativas NASCE AQUI, com semente. O banco não guarda letra:
+   guarda `correta_id`. Assim a correta não pode ficar viciada numa letra, e a
+   explicação de cada alternativa viaja COM ela, nunca com a letra. */
+function ordemDoItem(item, semente){
+  var ids = item.alts.map(function(_a,i){ return i; });
+  return embaralha(ids, item.id + "|" + semente);
+}
+
+/* ================= senha =================
+   O MESMO algoritmo do `gen_app.py`. A bateria extrai esta funcao do HTML e
+   confere que ela reproduz o hash que o Python emitiu -- e o que prova que as
+   duas linguagens concordam. Sementes abaixo de 2^31 de proposito: acima disso
+   o XOR em JS passa por ToInt32 e o resultado deixa de casar. */
+function _mistura(x){
+  x = Math.imul(x ^ (x >>> 16), 2246822507) >>> 0;
+  x = Math.imul(x ^ (x >>> 13), 3266489909) >>> 0;
+  return (x ^ (x >>> 16)) >>> 0;
+}
+function hashSenha(nome, senha){
+  var s = nome + "|" + senha + "|" + DADOS.sal, saida = "";
+  var sementes = [1779033703, 1013904223];
+  for (var k = 0; k < sementes.length; k++){
+    var x = (sementes[k] ^ s.length) >>> 0;
+    for (var i = 0; i < s.length; i++){
+      x = Math.imul(x ^ s.charCodeAt(i), 3432918353) >>> 0;
+      x = ((x << 13) | (x >>> 19)) >>> 0;
+    }
+    for (var r = 0; r < 3000; r++){ x = _mistura(x); }
+    saida += ("00000000" + x.toString(16)).slice(-8);
+  }
+  return saida;
+}
+
+/* ================= estado ================= */
+var EU = null, ST = null, MODO = null, ATUAL = null, ORDEM = [], POS = 0, travado = false;
+var CHAVE = function(n){ return "n1:" + n; };
+
+function vazio(nome){
+  return { nome: nome, resp: {}, simulados: [], correnteSim: null, ts: new Date().toISOString() };
+}
+function carrega(nome){
+  var v = vazio(nome), bruto = null;
+  try { var r = localStorage.getItem(CHAVE(nome)); if (r) bruto = JSON.parse(r); } catch(e){}
+  if (!bruto || typeof bruto !== "object" || Array.isArray(bruto)) return v;
+  /* Forma conferida campo por campo: JSON válido com forma errada ("42", "[]")
+     passaria pelo try/catch e quebraria a primeira gravação. */
+  var obj = function(x){ return (x && typeof x === "object" && !Array.isArray(x)) ? x : null; };
+  var arr = function(x){ return Array.isArray(x) ? x : null; };
+  return {
+    nome: nome,
+    resp: obj(bruto.resp) || {},
+    simulados: arr(bruto.simulados) || [],
+    correnteSim: obj(bruto.correnteSim) || null,
+    ts: typeof bruto.ts === "string" ? bruto.ts : v.ts
+  };
+}
+/* Grava e LÊ DE VOLTA. Existe ambiente que aceita o setItem e descarta em
+   silêncio; sem esta conferência o app diria "salvo" e o treino sumiria. */
+function salva(){
+  if (!ST) return false;
+  try {
+    var k = CHAVE(ST.nome), txt = JSON.stringify(ST);
+    localStorage.setItem(k, txt);
+    var volta = localStorage.getItem(k);
+    return volta !== null && volta.length === txt.length;
+  } catch(e){ return false; }
+}
+function falhouGravar(){
+  travado = true;
+  var s = $("#status");
+  if (s){ s.textContent = "NÃO SALVOU"; s.className = "st off"; }
+}
+function ok(msg){
+  var s = $("#status");
+  if (!s || travado) return;
+  s.textContent = msg || ""; s.className = "st";
+}
+
+/* ================= itens ================= */
+var ITENS = DADOS.itens;
+var PORID = {};
+ITENS.forEach(function(i){ PORID[i.id] = i; });
+function sorteaveis(){ return ITENS.filter(function(i){ return i.parecer !== "anulada"; }); }
+function porTema(t){ return ITENS.filter(function(i){ return i.tema === t; }); }
+
+/* ================= login ================= */
+function telaNomes(){
+  var box = $("#listaNomes"); box.innerHTML = "";
+  $("#subLogin").innerHTML = DADOS.itens.length + " itens no banco · " +
+    sorteaveis().length + " sorteáveis · " + DADOS.temas.length + " temas. Toque no seu nome."
+    + (DADOS.equipe_provisoria ? "<br><small>Os nomes de Colega 2 a 5 são provisórios — o Rafael troca por um só ajuste.</small>" : "");
+  DADOS.equipe.forEach(function(p){
+    var b = document.createElement("button");
+    b.className = "pri"; b.textContent = p.nome;
+    b.onclick = function(){ pedeSenha(p); };
+    box.appendChild(b);
+  });
+  checaAmbiente();
+}
+function checaAmbiente(){
+  var box = $("#avisoNav"); if (!box) return;
+  var av = [], guarda = true;
+  try {
+    var sonda = "n1".repeat(600);
+    localStorage.setItem("__t__", sonda);
+    guarda = localStorage.getItem("__t__") === sonda;
+    localStorage.removeItem("__t__");
+  } catch(e){ guarda = false; }
+  if (!guarda) av.push("<b>Este navegador não está guardando seu progresso.</b> Pode ser aba anônima. Abra numa aba normal, senão o treino não fica salvo.");
+  var ua = navigator.userAgent || "";
+  if (/FBAN|FBAV|Instagram|Line\/|MicroMessenger|; wv\)/.test(ua))
+    av.push("<b>Abra no navegador do celular.</b> Você entrou por dentro de um aplicativo; aqui o progresso pode não ser salvo.");
+  box.innerHTML = av.join("<br><br>");
+  box.className = av.length ? "box aviso" : "hide";
+}
+var PENDENTE = null, ERROS = 0;
+function pedeSenha(p){
+  PENDENTE = p; ERROS = 0;
+  $("#oiSenha").textContent = p.nome;
+  $("#campoSenha").value = "";
+  $("#erroSenha").className = "hide";
+  mostra("#tSenha");
+  setTimeout(function(){ $("#campoSenha").focus(); }, 60);
+}
+function tentaSenha(){
+  if (!PENDENTE) return;
+  var dada = $("#campoSenha").value || "";
+  if (!dada){ erroSenha("Digite a senha."); return; }
+  if (hashSenha(PENDENTE.nome, dada) === PENDENTE.h){ entra(PENDENTE.nome); return; }
+  ERROS++;
+  /* Sem bloqueio por tentativa, de proposito: no PIEPE a senha travava gente
+     de fora por erro de digitacao e nao havia saida. Aqui a pessoa erra quantas
+     vezes precisar, e depois de tres a tela diz a quem pedir. */
+  erroSenha(ERROS < 3
+    ? "Senha errada. Tente de novo."
+    : "Senha errada " + ERROS + " vezes. Peça a senha ao Rafael — ninguém fica travado por errar.");
+  $("#campoSenha").value = "";
+  $("#campoSenha").focus();
+}
+function erroSenha(m){
+  var e = $("#erroSenha");
+  e.textContent = m; e.className = "";
+}
+function entra(nome){
+  EU = nome; ST = carrega(nome);
+  if (!salva()) falhouGravar();
+  $("#hQuem").textContent = nome;
+  mostra("#tMenu");
+  menu();
+}
+function mostra(qual){
+  ["#tLogin","#tSenha","#tMenu","#tQuest","#tFim"].forEach(function(s){
+    $(s).className = (s === qual) ? "" : "hide";
+  });
+  var rodape = (qual === "#tQuest");
+  $("#btPular").className = rodape ? "" : "hide";
+  $("#btProx").className = rodape ? "forte" : "hide";
+}
+
+/* ================= menu ================= */
+function menu(){
+  MODO = null;
+  $("#oi").textContent = "Olá, " + EU.split(" ")[0] + ".";
+  var feitos = Object.keys(ST.resp).length;
+  var certos = 0;
+  Object.keys(ST.resp).forEach(function(k){ if (ST.resp[k].acertou) certos++; });
+  $("#resumoMenu").textContent = feitos ? (feitos + " itens respondidos · " + certos +
+    " acertos (" + Math.round(100*certos/feitos) + "%)") : "Você ainda não respondeu nenhum item.";
+  $("#btRetomar").className = ST.correnteSim ? "sec" : "hide";
+  var tm = $("#temasMenu"); tm.innerHTML = "<p class=\"sub\" style=\"margin:16px 0 6px\">Ou treine um tema:</p>";
+  DADOS.temas.forEach(function(t){
+    var n = porTema(t).length; if (!n) return;
+    var b = document.createElement("button");
+    b.className = "chip"; b.textContent = DADOS.rotulos[t] + " (" + n + ")";
+    b.onclick = function(){ iniciaTreino(t); };
+    tm.appendChild(b);
+  });
+  $("#hProg").textContent = ""; $("#hBarra").style.width = "0";
+}
+
+/* ================= treino ================= */
+var SEMENTE_RODADA = "treino";
+function iniciaTreino(tema){
+  MODO = "treino";
+  var pool = tema ? porTema(tema) : ITENS.slice();
+  /* Semente NOVA a cada rodada. Com semente fixa ("treino") a letra da correta
+     ficava congelada por item: quem treinasse duas vezes veria sempre o mesmo
+     arranjo, e um acumulo por sorteio -- medido, 6 de 13 na letra A -- viraria
+     padrao memorizavel. Agora cada rodada reembaralha. */
+  SEMENTE_RODADA = "treino" + Date.now() + "|" + (EU || "");
+  ORDEM = embaralha(pool.map(function(i){ return i.id; }), SEMENTE_RODADA);
+  POS = 0;
+  $("#faixaModo").innerHTML = "";
+  mostra("#tQuest"); pinta();
+}
+
+/* ================= simulado ================= */
+function novoSimulado(){
+  var comp = DADOS.composicao, escolhidos = [], usados = {};
+  var semente = "sim" + Date.now();
+  Object.keys(comp).forEach(function(c){
+    var pool = sorteaveis().filter(function(i){ return i.componente === c; });
+    embaralha(pool.map(function(i){ return i.id; }), semente + c).forEach(function(id){
+      if (escolhidos.filter(function(x){ return PORID[x].componente === c; }).length < comp[c]
+          && !usados[id]){ escolhidos.push(id); usados[id] = 1; }
+    });
+  });
+  /* Completa com qualquer sorteável se um componente não tinha itens suficientes,
+     SEM repetir — repetir item na mesma rodada é o defeito que o portão G19 mede. */
+  embaralha(sorteaveis().map(function(i){ return i.id; }), semente + "resto").forEach(function(id){
+    if (escolhidos.length < DADOS.itens_por_simulado && !usados[id]){
+      escolhidos.push(id); usados[id] = 1;
+    }
+  });
+  ST.correnteSim = {
+    ids: escolhidos, respostas: {}, inicio: Date.now(),
+    minutos: DADOS.minutos_simulado, semente: semente
+  };
+  if (!salva()) falhouGravar();
+  iniciaSimulado();
+}
+function iniciaSimulado(){
+  MODO = "simulado";
+  ORDEM = ST.correnteSim.ids.slice();
+  POS = 0;
+  mostra("#tQuest"); pinta(); tique();
+}
+var tTique = null;
+function restam(){
+  var s = ST.correnteSim;
+  if (!s) return 0;
+  /* Ancorado no timestamp de início, não em contador de tela: fechar e reabrir
+     o app não devolve tempo nem zera o cronômetro. */
+  return Math.max(0, s.inicio + s.minutos*60000 - Date.now());
+}
+function tique(){
+  if (tTique) clearInterval(tTique);
+  if (MODO !== "simulado") return;
+  var f = function(){
+    var ms = restam();
+    var mm = Math.floor(ms/60000), ss = Math.floor((ms%60000)/1000);
+    $("#faixaModo").innerHTML = "<div class=\"box aviso\">Simulado em andamento · <b>" +
+      mm + "min " + (ss<10?"0":"") + ss + "s</b> restantes · sem correção até o fim</div>";
+    if (ms <= 0){ clearInterval(tTique); fechaSimulado(true); }
+  };
+  f(); tTique = setInterval(f, 1000);
+}
+
+/* ================= pintar a questão ================= */
+function pinta(){
+  var id = ORDEM[POS];
+  if (!id){ if (MODO === "simulado") fechaSimulado(false); else fimTreino(); return; }
+  ATUAL = PORID[id];
+  var it = ATUAL;
+  $("#hProg").textContent = (POS+1) + "/" + ORDEM.length;
+  $("#hBarra").style.width = (100*(POS)/ORDEM.length) + "%";
+  $("#qMeta").innerHTML = esc(DADOS.rotulos[it.tema] || it.tema) + " · " +
+    esc(it.subtema) + "<br>" + esc(it.fonte_arquivo) + " · questão " +
+    esc(it.numero_no_caderno) + (it.banca_origem ? " · " + esc(it.banca_origem) : "");
+  /* O PDF quebra linha no meio da frase. Isso é diagramação da prova, não
+     conteúdo: renderizar literal deixava o enunciado picado na tela. Junta as
+     quebras simples e preserva o parágrafo (linha em branco). O texto GUARDADO
+     continua verbatim — só a apresentação muda. */
+  $("#qEnun").textContent = String(it.enunciado)
+    .replace(/\r/g, "")
+    .replace(/([^\n])\n([^\n])/g, "$1 $2")
+    .replace(/[ \t]{2,}/g, " ");
+
+  var imgs = $("#qImgs"); imgs.innerHTML = "";
+  (it.imagens || []).filter(function(m){ return m.tipo === "questao"; }).forEach(function(m){
+    imgs.appendChild(figura(m));
+  });
+
+  var caixa = $("#qAlts"); caixa.innerHTML = "";
+  var respondida = (MODO === "simulado")
+    ? ST.correnteSim.respostas[it.id]
+    : (ST.resp[it.id] ? { escolha: ST.resp[it.id].escolha } : null);
+  ORDEM_ALT = ordemDoItem(it, (MODO === "simulado" ? ST.correnteSim.semente : SEMENTE_RODADA));
+  ORDEM_ALT.forEach(function(idxAlt, pos){
+    var a = it.alts[idxAlt];
+    var b = document.createElement("button");
+    b.className = "alt";
+    b.innerHTML = "<span class=\"L\">" + LETRAS[pos] + "</span><span>" + esc(a.texto) + "</span>";
+    b.onclick = function(){ responde(idxAlt); };
+    caixa.appendChild(b);
+  });
+  $("#qExpl").innerHTML = "";
+  if (respondida) marca(respondida.escolha, MODO !== "simulado");
+  ok("");
+}
+var ORDEM_ALT = [];
+
+function figura(m){
+  var f = document.createElement("figure");
+  var i = document.createElement("img");
+  i.src = m.arquivo; i.alt = m.alt || "";
+  i.loading = "lazy";
+  i.onerror = function(){
+    f.innerHTML = "<div class=\"box aviso\"><b>A imagem não carregou.</b> " +
+      esc(m.alt || "") + "</div>";
+  };
+  i.onclick = function(){ zoom(m); };
+  var c = document.createElement("figcaption");
+  c.textContent = m.alt || "";
+  f.appendChild(i); f.appendChild(c);
+  return f;
+}
+function zoom(m){
+  var d = document.createElement("div"); d.className = "zoom";
+  var i = document.createElement("img"); i.src = m.arquivo; i.alt = m.alt || "";
+  var b = document.createElement("button"); b.className = "sec"; b.textContent = "Fechar";
+  b.onclick = function(){ d.remove(); };
+  d.appendChild(i); d.appendChild(b); document.body.appendChild(d);
+}
+
+function responde(idxAlt){
+  var it = ATUAL;
+  var acertou = (idxAlt === it.correta_id);
+  if (MODO === "simulado"){
+    ST.correnteSim.respostas[it.id] = { escolha: idxAlt, ts: Date.now() };
+    if (!salva()) falhouGravar(); else ok("marcado");
+    marca(idxAlt, false);
+    setTimeout(function(){ POS++; pinta(); }, 180);
+    return;
+  }
+  ST.resp[it.id] = { escolha: idxAlt, acertou: acertou, ts: new Date().toISOString() };
+  if (!salva()) falhouGravar(); else ok(acertou ? "acertou" : "errou");
+  marca(idxAlt, true);
+}
+
+function marca(escolha, comExplicacao){
+  var it = ATUAL;
+  /* SNAPSHOT dos botões antes de inserir qualquer coisa. `children` é coleção
+     VIVA: inserir a explicação dentro do laço deslizava os índices, e o destaque
+     de "correta" chegou a cair numa div de explicação em vez da alternativa.
+     Medido na tela em 08/09 13:2x — a bateria em Node não pega isso, porque ela
+     testa o dado e este defeito é de DOM. */
+  var botoes = Array.prototype.slice.call($("#qAlts").querySelectorAll("button.alt"));
+  botoes.forEach(function(b, p){
+    var idxAlt = ORDEM_ALT[p];
+    b.disabled = true;
+    if (idxAlt === it.correta_id) b.className = "alt certa";
+    else if (idxAlt === escolha) b.className = "alt errada";
+  });
+  if (comExplicacao){
+    botoes.forEach(function(b, p){
+      var idxAlt = ORDEM_ALT[p];
+      var pq = document.createElement("div");
+      pq.className = "pq";
+      pq.textContent = it.alts[idxAlt].porque_cai || "";
+      b.parentNode.insertBefore(pq, b.nextSibling);
+    });
+    explica();
+  }
+}
+
+/* A imagem da EXPLICAÇÃO só entra no DOM aqui, depois de responder — antes disso
+   ela vazaria o gabarito. */
+function explica(){
+  var it = ATUAL, box = $("#qExpl");
+  var h = "";
+  if (it.parecer === "anulada")
+    h += "<div class=\"box aviso\"><b>Item anulado pela banca.</b> " +
+         esc(it.nota_da_anulacao || "") + " Ele não entra no sorteio do simulado.</div>";
+  h += "<div class=\"box regra\"><h4>regra de bolso</h4>" + esc(it.regra_de_bolso) + "</div>";
+  h += "<div class=\"box minha\"><h4>explicação didática</h4>" + esc(it.explicacao_minha) + "</div>";
+  if (it.atualizacao_de_diretriz)
+    h += "<div class=\"box aviso\"><h4>atenção à atualização</h4>" + esc(it.atualizacao_de_diretriz) + "</div>";
+  if (it.explicacao_deles)
+    h += "<div class=\"box deles\"><h4>resposta comentada da banca (verbatim)</h4>" +
+         esc(it.explicacao_deles) + "</div>";
+  else
+    h += "<div class=\"box deles\"><h4>resposta comentada da banca</h4>" +
+         "A prova não trouxe comentário para este item.</div>";
+  h += "<div class=\"fonte\">Fonte: " + esc(it.fonte_citada) + " (" + esc(it.fonte_ano) + ")" +
+       (it.referencias && it.referencias.length ? " · a prova citou " + it.referencias.length +
+        " referência(s)" : "") + "</div>";
+  box.innerHTML = h;
+  (it.imagens || []).filter(function(m){ return m.tipo === "explicacao"; }).forEach(function(m){
+    box.appendChild(figura(m));
+  });
+}
+
+/* ================= fim ================= */
+function fimTreino(){
+  var feitos = 0, certos = 0;
+  ORDEM.forEach(function(id){ if (ST.resp[id]){ feitos++; if (ST.resp[id].acertou) certos++; } });
+  $("#fimTit").textContent = "Fim da rodada";
+  $("#fimSub").textContent = certos + " de " + feitos + " respondidos · " +
+    (ORDEM.length - feitos) + " pulados · " + ORDEM.length + " no total";
+  $("#fimTab").innerHTML = "";
+  $("#btVerErros").className = "hide";
+  mostra("#tFim");
+}
+function fechaSimulado(porTempo){
+  if (tTique) clearInterval(tTique);
+  var s = ST.correnteSim; if (!s) { menu(); return; }
+  var certos = 0, errados = 0, pulados = 0, linhas = "";
+  s.ids.forEach(function(id, k){
+    var it = PORID[id], r = s.respostas[id];
+    var sit;
+    if (!r){ pulados++; sit = "pulou"; }
+    else if (r.escolha === it.correta_id){ certos++; sit = "acertou"; }
+    else { errados++; sit = "errou"; }
+    linhas += "<tr><td>" + (k+1) + "</td><td>" + esc(DADOS.rotulos[it.tema] || it.tema) +
+              "</td><td>" + sit + "</td></tr>";
+  });
+  var total = certos + errados + pulados;
+  ST.simulados.push({
+    fim: Date.now(), inicio: s.inicio, ids: s.ids, respostas: s.respostas,
+    certos: certos, errados: errados, pulados: pulados, total: total,
+    por_tempo: !!porTempo
+  });
+  ST.correnteSim = null;
+  if (!salva()) falhouGravar();
+  $("#fimTit").textContent = "Nota: " + certos + " de " + total;
+  /* A conta da tela FECHA: acertos + erros + pulados = total. Se não fechar, é
+     defeito, não arredondamento. */
+  $("#fimSub").textContent = certos + " acertos + " + errados + " erros + " + pulados +
+    " pulados = " + total + (porTempo ? " · o tempo acabou" : "");
+  $("#fimTab").innerHTML = "<table class=\"res\"><tr><th>#</th><th>tema</th><th>situação</th></tr>" +
+    linhas + "</table>";
+  $("#btVerErros").className = "pri";
+  $("#btVerErros").onclick = function(){
+    MODO = "revisao"; ORDEM = s.ids.slice(); POS = 0;
+    ST.resp = ST.resp || {};
+    s.ids.forEach(function(id){
+      var r = s.respostas[id];
+      if (r) ST.resp[id] = { escolha: r.escolha,
+        acertou: r.escolha === PORID[id].correta_id, ts: new Date().toISOString() };
+    });
+    salva();
+    $("#faixaModo").innerHTML = "<div class=\"box regra\">Revisão do simulado</div>";
+    mostra("#tQuest"); pinta();
+  };
+  mostra("#tFim");
+}
+
+/* ================= rodapé ================= */
+$("#btEntrar").onclick = tentaSenha;
+$("#btNaoSouEu").onclick = function(){ PENDENTE = null; mostra("#tLogin"); telaNomes(); };
+$("#campoSenha").addEventListener("keydown", function(ev){
+  if (ev.key === "Enter"){ ev.preventDefault(); tentaSenha(); }
+});
+$("#btTreino").onclick = function(){ iniciaTreino(null); };
+$("#btSimulado").onclick = function(){ novoSimulado(); };
+$("#btRetomar").onclick = function(){ if (ST.correnteSim) iniciaSimulado(); };
+$("#btTrocar").onclick = function(){ EU = null; ST = null; mostra("#tLogin"); telaNomes(); };
+$("#btVoltaMenu").onclick = function(){ mostra("#tMenu"); menu(); };
+$("#btPular").onclick = function(){ POS++; pinta(); };
+$("#btProx").onclick = function(){ POS++; pinta(); };
+$("#btSair").onclick = function(){
+  if (MODO === "simulado" && !confirm("O simulado continua contando o tempo. Sair mesmo?")) return;
+  mostra("#tMenu"); menu();
+};
+
+/* ================= arranque ================= */
+/* Nesta superficie nao ha sw.js ao lado do HTML, entao o app
+   nao tenta registrar service worker. O modo offline existe na
+   versao hospedada com os arquivos soltos. */
+mostra("#tLogin");
+telaNomes();
+</script>
