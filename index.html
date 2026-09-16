@@ -136,7 +136,7 @@ input:focus-visible,button:focus-visible{outline:3px solid var(--azul2);outline-
 .revelar .cha{flex:0 0 auto;font-weight:700;opacity:.7}
 .revelar .ral{opacity:.75}
 @media (max-width:420px){.revelar .ral{display:none}}
-.enun{font-size:17px;line-height:1.55;white-space:pre-wrap;overflow-wrap:break-word}
+.enun{font-size:calc(17px * var(--esc));line-height:1.55;white-space:pre-wrap;overflow-wrap:break-word}
 figure{margin:14px 0}
 figure img{display:block;width:100%;max-width:100%;height:auto;border-radius:var(--r2);border:1px solid var(--linha)}
 /* I05: SVG baixado com cor FIXA (sem currentColor) some no tema escuro.
@@ -145,7 +145,7 @@ figure img{display:block;width:100%;max-width:100%;height:auto;border-radius:var
 figure img.prancha{background:#fff;padding:8px;box-sizing:border-box}
 figcaption{font-size:15px;color:var(--sec);margin-top:6px}
 .alt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:var(--sup);
-  border:1.5px solid var(--bd);border-radius:var(--r2);padding:13px;margin:9px 0;min-height:48px;color:var(--txt)}
+  border:1.5px solid var(--bd);border-radius:var(--r2);padding:13px;margin:9px 0;min-height:48px;color:var(--txt);font-size:calc(16px * var(--esc))}
 .alt .L{flex:0 0 26px;height:26px;border-radius:6px;background:var(--sup2);color:var(--sec);
   display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
 .alt.certa{border-color:var(--verde);background:var(--verde-bg)}
@@ -177,7 +177,7 @@ figcaption{font-size:15px;color:var(--sec);margin-top:6px}
 /* depois de responder o rascunho sai de cena: o verde e o vermelho mandam */
 .alt[disabled] .x{display:none}
 .pq{font-size:15.5px;color:var(--sec);margin:6px 0 0 36px;line-height:1.45}
-.box{border-radius:var(--r2);padding:13px;margin:12px 0;font-size:16px;line-height:1.5}
+.box{border-radius:var(--r2);padding:13px;margin:12px 0;font-size:calc(16px * var(--esc));line-height:1.5}
 .box.regra{background:var(--sup2);border-left:4px solid var(--azul2)}
 .box.deles{background:var(--sup1);border:1px solid var(--linha)}
 .box.minha{background:var(--verde-bg);border:1px solid var(--verde)}
@@ -206,7 +206,7 @@ table.res th,table.res td{text-align:left;padding:7px 6px;border-bottom:1px soli
      proxima, e numa vinheta de 8 linhas isso custa releitura -- que na
      prova e tempo. 34em dao ~70 caracteres. No celular nao muda nada,
      porque la a largura ja e menor que isso. */
-  .enun{font-size:17.5px;max-width:34em} }
+  .enun{font-size:calc(17.5px * var(--esc));max-width:34em} }
 .box.minha p{margin:0 0 .65em}
 .box.minha p:last-child{margin-bottom:0}
 .box.minha p.arm{font-weight:600;padding-left:10px;border-left:3px solid currentColor}
@@ -285,6 +285,46 @@ figcaption .cred{opacity:.8}
   color:var(--tx);border-radius:10px;font:inherit;font-size:15px;cursor:pointer;padding:0 10px;margin-right:6px}
 .hd .nav:hover{background:var(--cx2)}
 .hd .nav[disabled]{opacity:.4;cursor:default}
+/* E40.2 -- o grafico da tela inicial. As cores saem das variaveis que JA existem
+   (`--azul` e `--verde`). Escrevi `--ok` na primeira versao: variavel inexistente
+   nao quebra nada em CSS -- a linha simplesmente nao teria cor, e o grafico sairia
+   incompleto passando por todos os portoes. Cor inventada falha em silencio.
+   Altura fixa para o cartao nao pular de
+   tamanho quando o dado muda; largura fluida. */
+.eixo{display:block;width:100%;height:96px;margin:10px 0 2px;overflow:visible}
+.eixo .bar{fill:var(--azul);opacity:.22}
+.eixo .bar.hoje{opacity:.45}
+.eixo .lin{fill:none;stroke:var(--verde);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.eixo .pt{fill:var(--verde)}
+.eixo .dia{fill:var(--sec);font-size:9px;text-anchor:middle}
+.eixo .dia.hj{fill:var(--txt);font-weight:700}
+/* E40.3: a frase de tendencia -- o grafico mostra a forma, a frase diz o que
+   ela significa, e e a frase que a pessoa repete para si mesma. */
+.tend{font-size:12.5px;color:var(--sec);margin:2px 0 0}
+.tend b{color:var(--txt)}
+
+/* ---- ajustes (E41) ----
+   `--esc` multiplica SO o corpo da questao. Cabecalho, botoes e rodape ficam
+   fora de proposito: escalar tudo moveria o alvo de toque e a barra. */
+:root{--esc:1}
+/* A regua dentro da questao: discreta, para nao competir com o enunciado. */
+.zoomtx{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin:0 0 4px}
+.zoomtx span{font-size:12px;color:var(--sec)}
+.zoomtx button{min-width:44px;min-height:44px;padding:0 10px;font-size:15px;font-weight:600;
+  background:var(--sup);border:1px solid var(--bd);border-radius:var(--r2);color:var(--sec)}
+@media (hover:hover){ .zoomtx button:hover{background:var(--sup2);color:var(--txt)} }
+.ajlin{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 18px}
+.ajlin button{flex:1 1 92px;min-height:44px}
+.ajlin button.on{background:var(--azul);color:#fff;border-color:var(--azul)}
+.ajmsg{margin:6px 0 18px;font-size:13.5px}
+.ajmsg.ruim{color:var(--vermelho)}
+.ajmsg.bom{color:var(--verde)}
+#tAjustes h3{margin:22px 0 2px;font-size:15px}
+#tAjustes h3:first-of-type{margin-top:8px}
+.legenda{display:flex;gap:14px;font-size:12px;color:var(--sec);margin:0 0 2px}
+.legenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.legenda .lv{background:var(--azul);opacity:.35}
+.legenda .la{background:var(--verde)}
 </style>
 
 <main class="wrap">
@@ -357,6 +397,7 @@ figcaption .cred{opacity:.8}
     <span id="setaConteudo">▸</span> Escolher conteúdo</button>
   <div id="temasMenu" class="hide"></div>
   <p class="sub" id="sincLinha" style="margin-top:14px"></p>
+  <button class="sec" id="btAjustes">Ajustes</button>
   <button class="sec" id="btTrocar">Trocar de pessoa</button>
   <button class="sec hide" id="btAdmin">Quem está usando o app</button>
   <p class="assin">Organizado por Rafael Soares de Araújo, com questões do Revalida, do ENAMED, do ENARE e de provas de faculdades de medicina, nos assuntos da N1 Específica de 19/09.</p>
@@ -364,7 +405,12 @@ figcaption .cred{opacity:.8}
 
 <!-- E32: as 20 questoes de cortesia acabaram. Tela inteira, nao aviso no rodape:
      a pessoa precisa entender que parou de proposito e como continuar. -->
-<section id="tLimite" class="hide">
+<!-- E39.8: `data-terminal` diz que daqui nao se volta para tras -- voltar da tela
+     do limite levaria de novo a questao, que trava de novo, e a pessoa ficaria
+     presa num vaivem. O atributo e declarativo de proposito: tela nova so precisa
+     marcar a si mesma, sem ninguem editar uma lista em outro arquivo (mesma razao
+     do G76b). -->
+<section id="tLimite" class="hide" data-terminal="1">
   <div class="card">
     <h1 style="margin:0 0 12px">Por aqui vai o teste 👋</h1>
     <p id="limTxt" style="line-height:1.6;margin:0 0 14px"></p>
@@ -381,6 +427,40 @@ figcaption .cred{opacity:.8}
   <div id="adLista"></div>
   <!-- E39.3: o "Voltar ao menu" desta tela saiu; o cabecalho faz o papel -->
 </section>
+<section id="tAjustes" class="hide">
+  <h1>Ajustes</h1>
+
+  <h3>Tamanho da letra nas questões</h3>
+  <p class="sub">Vale para o enunciado, as alternativas e a explicação. Dentro da
+     questão você também muda pelo <b>A−</b> e <b>A+</b>.</p>
+  <div class="ajlin" id="ajEscala"></div>
+
+  <h3>Tema</h3>
+  <p class="sub">Por padrão o app acompanha o seu aparelho.</p>
+  <div class="ajlin" id="ajTema"></div>
+
+  <h3>Seu nome</h3>
+  <p class="sub">É o nome que aparece no seu progresso. O treino inteiro vai junto —
+     nada se perde. Precisa da senha porque é ela que abre a conta.</p>
+  <input id="ajNome" type="text" autocomplete="name" aria-label="seu nome">
+  <input id="ajNomeSenha" type="password" autocomplete="current-password"
+         placeholder="sua senha" aria-label="sua senha, para confirmar a troca de nome">
+  <button class="sec" id="btSalvaNome">Salvar o nome</button>
+  <p class="ajmsg" id="ajNomeMsg"></p>
+
+  <h3>Trocar a senha</h3>
+  <p class="sub">A senha protege a sua conta neste aparelho. Continua sem recuperação:
+     se esquecer a nova, não há como voltar.</p>
+  <input id="ajSenhaVelha" type="password" autocomplete="current-password"
+         placeholder="senha de agora" aria-label="senha de agora">
+  <input id="ajSenhaNova" type="password" autocomplete="new-password"
+         placeholder="senha nova" aria-label="senha nova">
+  <input id="ajSenhaNova2" type="password" autocomplete="new-password"
+         placeholder="repita a senha nova" aria-label="repita a senha nova">
+  <button class="sec" id="btSalvaSenha">Salvar a senha</button>
+  <p class="ajmsg" id="ajSenhaMsg"></p>
+</section>
+
 <section id="tPainel" class="hide">
   <h1>Meu progresso</h1>
   <p class="sub" id="pnResumo"></p>
@@ -399,6 +479,11 @@ figcaption .cred{opacity:.8}
 
 <section id="tQuest" class="hide">
   <div id="faixaModo"></div>
+  <!-- E41: a regua do tamanho fica ONDE SE LE, nao so nos Ajustes -- a pessoa
+       passa 40 minutos nesta tela e e aqui que ela percebe que a letra e pequena. -->
+  <div class="zoomtx"><span>Texto</span>
+    <button type="button" id="btMenos" aria-label="Diminuir a letra">A−</button>
+    <button type="button" id="btMais" aria-label="Aumentar a letra">A+</button></div>
   <div class="card">
     <div class="meta" id="qMeta"></div>
     <div id="qAviso" hidden></div>
@@ -1060,6 +1145,11 @@ function podeSair(){
 function voltar(){
   if (!PILHA.length) { if (podeSair()){ mostra("#tMenu", true); menu(); } return; }
   if (!podeSair()) return;
+  /* tela terminal: nao se volta para tras a partir dela */
+  var atualEl = document.querySelector("section[id]:not(.hide)");
+  if (atualEl && atualEl.getAttribute("data-terminal")){
+    PILHA.length = 0; mostra("#tMenu", true); menu(); return;
+  }
   var alvo = PILHA.pop();
   mostra(alvo, true);
   if (alvo === "#tMenu") menu();
@@ -1088,8 +1178,15 @@ function mostra(qual, semEmpilhar){
      nao e QUAL tela e sim se ja HA usuario: vale para toda tela de antes do login,
      inclusive as que ainda nao existem (mesma razao do G76b). */
   var dentro = !!EU;
-  $("#btMenu").className = dentro ? "nav" : "nav hide";
-  $("#btVoltar").className = (dentro && qual !== "#tMenu") ? "nav" : "nav hide";
+  /* E39.8 -- ele: "Tem locais que a seta de voltar e a mesma coisa de MENU. Nesses
+     pontos, deixe so a seta." Dois botoes que fazem a mesma coisa lado a lado sao
+     ruido, e foi o que a tela do limite mostrou. Regra: o MENU so aparece quando ha
+     para onde ir que a seta NAO alcanca -- ou seja, quando a tela anterior nao e o
+     proprio menu. Na raiz nao aparece nenhum dos dois. */
+  var voltaParaMenu = (!PILHA.length || PILHA[PILHA.length - 1] === "#tMenu");
+  var naRaiz = (qual === "#tMenu");
+  $("#btVoltar").className = (dentro && !naRaiz) ? "nav" : "nav hide";
+  $("#btMenu").className = (dentro && !naRaiz && !voltaParaMenu) ? "nav" : "nav hide";
 }
 
 /* ================= menu ================= */
@@ -1126,6 +1223,9 @@ function menu(){
     "<span><b>" + revHoje + "</b> para revisar hoje</span>" +
     "<span><b>" + diasEst + "</b> " + (diasEst === 1 ? "dia" : "dias") + " de estudo</span></div>" +
     "<div class=\"pn-prog\"><i style=\"width:" + pct(A.respondidas, total) + "%\"></i></div>" +
+    /* E40.2: a evolucao entra DEPOIS dos numeros e da barra -- os numeros sao o
+       agora, o grafico e o contexto. Vazio quando nao ha 3 dias de historia. */
+    graficoDias(A) +
     "<button type=\"button\" class=\"lk\" id=\"lkPainel\">Ver painel completo →</button>";
   $("#lkPainel").onclick = abrePainel;
   $("#btTreino").textContent = novas ? "Treinar: " + novas + (novas === 1 ? " questão nova" : " questões novas")
@@ -1274,6 +1374,75 @@ function agregaPainel(st, itens){
   return out;
 }
 function pct(c, f){ return f ? Math.round(100 * c / f) : 0; }
+
+/* E40.2 -- evolucao por dia, em SVG inline. Devolve "" quando nao ha historia
+   suficiente: com menos de 3 dias, duas barras nao sao uma tendencia e desenhar
+   uma seria mentir com estetica. */
+var DIAS_MIN_GRAFICO = 3, DIAS_NO_GRAFICO = 10;
+function graficoDias(A){
+  var chaves = Object.keys(A.dias || {}).sort();
+  if (chaves.length < DIAS_MIN_GRAFICO) return "";
+  /* do primeiro dia estudado ate hoje, SEM pular: dia vazio e informacao */
+  var fim = new Date(), ini = new Date(chaves[0] + "T00:00:00");
+  var serie = [], d = new Date(ini);
+  while (d <= fim && serie.length < 400){
+    var k = d.toISOString().slice(0, 10), v = A.dias[k] || { feitos: 0, certos: 0 };
+    /* E40.3: a INICIAL do dia da semana, nao o numero do mes. E o que Duolingo,
+       Apple Fitness e Github fazem: "sexta" se le sem contar, e `17` nao diz
+       nada sozinho. */
+    serie.push({ k: k, feitos: v.feitos, certos: v.certos,
+                 dia: "DSTQQSS".charAt(d.getDay()) });
+    d = new Date(d.getTime() + 86400000);
+  }
+  serie = serie.slice(-DIAS_NO_GRAFICO);
+  var L = 300, H = 96, pb = 14, pt = 8;             /* area util do desenho */
+  var n = serie.length, larg = L / n, bw = Math.min(26, larg * 0.56);
+  var teto = Math.max.apply(null, serie.map(function(s){ return s.feitos; })) || 1;
+  var barras = "", linha = "", pontos = "", rotulos = "", ultimo = null;
+  serie.forEach(function(s, i){
+    var cx = i * larg + larg / 2;
+    var h = s.feitos ? Math.max(3, (H - pb - pt) * s.feitos / teto) : 0;
+    if (h) barras += '<rect class="bar' + (i === n - 1 ? ' hoje' : '') + '" x="' +
+      (cx - bw / 2).toFixed(1) + '" y="' + (H - pb - h).toFixed(1) +
+      '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="3"/>';
+    if (s.feitos){
+      var y = (H - pb) - (H - pb - pt) * (pct(s.certos, s.feitos) / 100);
+      linha += (ultimo === null ? "M" : "L") + cx.toFixed(1) + " " + y.toFixed(1) + " ";
+      pontos += '<circle class="pt" cx="' + cx.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="2.6"/>';
+      ultimo = i;
+    }
+    /* hoje em negrito: ancora de leitura, para o olho achar o agora */
+    rotulos += '<text class="dia' + (i === n - 1 ? ' hj' : '') + '" x="' +
+      cx.toFixed(1) + '" y="' + (H - 3) + '">' + s.dia + '</text>';
+  });
+  /* G98: o mesmo conteudo em palavras, para quem usa leitor de tela */
+  var comEstudo = serie.filter(function(s){ return s.feitos; });
+  var totalQ = comEstudo.reduce(function(a, s){ return a + s.feitos; }, 0);
+  var totalC = comEstudo.reduce(function(a, s){ return a + s.certos; }, 0);
+  var rot = "Evolução dos últimos " + n + " dias: " + totalQ + " questões em " +
+    comEstudo.length + (comEstudo.length === 1 ? " dia" : " dias") + " de estudo, " +
+    pct(totalC, totalQ) + "% de acerto no período.";
+  /* E40.3 -- *variance annotation*: compara os 3 ultimos dias com os 3 anteriores.
+     So aparece com os 6 completos; com menos, uma 'tendencia' seria ruido com
+     cara de conclusao. */
+  var frase = "";
+  if (comEstudo.length >= 6){
+    var ult = comEstudo.slice(-3), ant = comEstudo.slice(-6, -3);
+    var somaF = function(a){ return a.reduce(function(x, s){ return x + s.feitos; }, 0); };
+    var somaC = function(a){ return a.reduce(function(x, s){ return x + s.certos; }, 0); };
+    var pu = pct(somaC(ult), somaF(ult)), pa = pct(somaC(ant), somaF(ant)), dif = pu - pa;
+    frase = '<p class="tend">' + (
+      Math.abs(dif) < 3 ? 'Acerto <b>estável</b> nos últimos dias, em <b>' + pu + '%</b>.'
+      : (dif > 0 ? 'Acerto <b>subiu ' + dif + ' pontos</b> nos últimos 3 dias, para <b>' + pu + '%</b>.'
+                 : 'Acerto <b>caiu ' + Math.abs(dif) + ' pontos</b> nos últimos 3 dias, para <b>' + pu + '%</b>.')
+    ) + '</p>';
+  }
+  return '<div class="legenda"><span><i class="lv"></i>questões no dia</span>' +
+    '<span><i class="la"></i>% de acerto</span></div>' +
+    '<svg class="eixo" viewBox="0 0 ' + L + ' ' + H + '" preserveAspectRatio="none" ' +
+    'role="img" aria-label="' + esc(rot) + '">' + barras +
+    (linha ? '<path class="lin" d="' + linha.trim() + '"/>' : "") + pontos + rotulos + '</svg>' + frase;
+}
 /* E39.2: tres fontes caem na mesma coluna de "O que voce mais erra" -- o TEMA
    vem do rotulo proprio (maiusculo), o nivel e o foco vem de frases escritas em
    minuscula. A coluna saia desalinhada. Capitalizo na montagem em vez de
@@ -1877,6 +2046,11 @@ $("#campoSenha").addEventListener("keydown", function(ev){
 $("#btTreino").onclick = function(){ iniciaTreino(null); };
 $("#btSimulado").onclick = function(){ novoSimulado(); };
 $("#btRetomar").onclick = function(){ if (ST.correnteSim) iniciaSimulado(); };
+$("#btAjustes").onclick = abreAjustes;
+$("#btSalvaNome").onclick = salvaNomeNovo;
+$("#btSalvaSenha").onclick = salvaSenhaNova;
+$("#btMenos").onclick = function(){ mudaEscala(-1); };
+$("#btMais").onclick = function(){ mudaEscala(1); };
 $("#btTrocar").onclick = function(){ EU = null; ST = null; abreEntrada(); };
 /* E23 (15/09): painel do organizador. O botao so aparece para o nome do organizador;
    a prova de verdade e o codigo de administrador, conferido no SERVIDOR (op admin).
@@ -2008,6 +2182,147 @@ $("#btVoltaMenu").onclick = function(){ mostra("#tMenu"); menu(); };
 /* E39.7: abrir e fechar a lista de temas. O estado vive no navegador -- quem
    prefere ver tudo aberto abre uma vez, nao toda vez. `localStorage` pode
    lancar (janela anonima, cookies bloqueados), e ai o padrao vale. */
+/* ================= ajustes (E41) =================
+   Tres degraus, nao um controle continuo: 40 valores dariam 39 layouts
+   quebrados e nenhum deles testado. A preferencia e do APARELHO, nao da
+   pessoa -- quem le no celular quer maior, no PC quer normal -- entao mora
+   no localStorage e nao viaja para o servidor. */
+var ESCALAS = [{ k: "1", r: "Normal" }, { k: "1.15", r: "Grande" }, { k: "1.3", r: "Maior" }];
+function escalaAtual(){
+  var v = null;
+  try { v = localStorage.getItem("n1:escala"); } catch(e){}
+  return ESCALAS.some(function(x){ return x.k === v; }) ? v : "1";
+}
+function aplicaEscala(k){
+  var ok = ESCALAS.some(function(x){ return x.k === k; }) ? k : "1";
+  document.documentElement.style.setProperty("--esc", ok);
+  try { localStorage.setItem("n1:escala", ok); } catch(e){}
+  marcaEscolhido("#ajEscala", ok);
+}
+function mudaEscala(passo){
+  var i = ESCALAS.map(function(x){ return x.k; }).indexOf(escalaAtual());
+  aplicaEscala(ESCALAS[Math.max(0, Math.min(ESCALAS.length - 1, i + passo))].k);
+}
+
+/* O app ja acompanha o aparelho sozinho; isto e para quem quer FORCAR um dos
+   dois. `data-theme` no root e o que o CSS ja espera. */
+var TEMAS = [{ k: "", r: "Do aparelho" }, { k: "light", r: "Claro" }, { k: "dark", r: "Escuro" }];
+function temaAtual(){
+  var v = null;
+  try { v = localStorage.getItem("n1:tema"); } catch(e){}
+  return TEMAS.some(function(x){ return x.k === v; }) ? v : "";
+}
+function aplicaTema(k){
+  var ok = TEMAS.some(function(x){ return x.k === k; }) ? k : "";
+  if (ok) document.documentElement.setAttribute("data-theme", ok);
+  else document.documentElement.removeAttribute("data-theme");
+  try { localStorage.setItem("n1:tema", ok); } catch(e){}
+  marcaEscolhido("#ajTema", ok);
+}
+function marcaEscolhido(onde, k){
+  var box = $(onde); if (!box) return;
+  Array.prototype.forEach.call(box.querySelectorAll("button"), function(b){
+    b.className = (b.getAttribute("data-k") === k) ? "sec on" : "sec";
+  });
+}
+function linhaDeEscolha(onde, lista, atual, aplica){
+  var box = $(onde); if (!box) return;
+  box.innerHTML = "";
+  lista.forEach(function(x){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "sec"; b.setAttribute("data-k", x.k);
+    b.textContent = x.r; b.onclick = function(){ aplica(x.k); };
+    box.appendChild(b);
+  });
+  marcaEscolhido(onde, atual);
+}
+function ajMsg(onde, texto, bom){
+  var e = $(onde); if (!e) return;
+  e.textContent = texto || "";
+  e.className = "ajmsg" + (texto ? (bom ? " bom" : " ruim") : "");
+}
+function abreAjustes(){
+  linhaDeEscolha("#ajEscala", ESCALAS, escalaAtual(), aplicaEscala);
+  linhaDeEscolha("#ajTema", TEMAS, temaAtual(), aplicaTema);
+  $("#ajNome").value = EU || "";
+  ["#ajNomeSenha", "#ajSenhaVelha", "#ajSenhaNova", "#ajSenhaNova2"].forEach(
+    function(s){ $(s).value = ""; });
+  ajMsg("#ajNomeMsg", ""); ajMsg("#ajSenhaMsg", "");
+  mostra("#tAjustes");
+}
+
+/* TROCAR O NOME. Duas coisas que nao sao obvias e que o codigo tem de respeitar:
+
+   1. `hashSenha(nome, senha)` leva o NOME dentro. Renomear sem refazer o hash
+      trancaria a pessoa para fora da propria conta na proxima entrada. Por isso
+      a senha e pedida -- e por isso, de graca, ninguem renomeia a conta alheia
+      num celular destravado.
+   2. O servidor guarda por nome e `envia()` so manda o que esta pendente. Sem
+      re-enfileirar tudo, o nome novo nasceria com ZERO questoes no painel. */
+function salvaNomeNovo(){
+  var novo = ($("#ajNome").value || "").trim().replace(/\s+/g, " ");
+  var senha = $("#ajNomeSenha").value || "";
+  if (!EU || !ST) return;
+  if (novo === EU){ ajMsg("#ajNomeMsg", "Esse já é o seu nome."); return; }
+  if (novo.length < 2){ ajMsg("#ajNomeMsg", "Escreva seu nome (2 letras ou mais)."); return; }
+  var c = contas();
+  var bate = Object.keys(c).filter(function(n){
+    return n !== EU && nomeIgual(n, novo); })[0];
+  if (bate){ ajMsg("#ajNomeMsg", "Já existe “" + bate + "” neste aparelho."); return; }
+  if (!c[EU] || hashSenha(EU, senha) !== c[EU].h){
+    ajMsg("#ajNomeMsg", "Senha errada — o nome não foi trocado."); return; }
+
+  var velho = EU;
+  /* re-enfileira ANTES de gravar: se a gravacao falhar, o pior que acontece e
+     reenviar o que o servidor ja tem (ele une por item, nao duplica resposta). */
+  for (var id in (ST.resp || {})){ if (ST.resp[id]) ST.resp[id].env = false; }
+  (ST.simulados || []).forEach(function(x){ if (x) x.env = false; });
+  ST.nome = novo; EU = novo;
+  if (!salva()){
+    EU = velho; ST.nome = velho; ajMsg("#ajNomeMsg", "Não consegui gravar o nome novo neste aparelho.");
+    return;
+  }
+  c[novo] = { h: hashSenha(novo, senha), criado: (c[velho] || {}).criado || "" };
+  delete c[velho];
+  if (!gravaContas(c)){
+    EU = velho; ST = carrega(velho);
+    ajMsg("#ajNomeMsg", "Não consegui gravar o nome novo neste aparelho."); return;
+  }
+  try { localStorage.removeItem(CHAVE(velho)); } catch(e){}
+  $("#hQuem").textContent = novo;
+  $("#ajNomeSenha").value = "";
+  ajMsg("#ajNomeMsg", "Pronto: agora você é “" + novo + "”, com o treino inteiro.", true);
+  envia();
+}
+
+/* TROCAR A SENHA. Exige a de agora: sem isso, quem pegar o celular destravado
+   assume a conta. A conferencia e local porque a senha sempre foi local -- o
+   app guarda o embaralhado dela, nunca ela. */
+function salvaSenhaNova(){
+  var velha = $("#ajSenhaVelha").value || "";
+  var a = $("#ajSenhaNova").value || "", b = $("#ajSenhaNova2").value || "";
+  if (!EU) return;
+  var c = contas();
+  if (!c[EU] || hashSenha(EU, velha) !== c[EU].h){
+    ajMsg("#ajSenhaMsg", "A senha de agora está errada."); return; }
+  if (a.length < 4){ ajMsg("#ajSenhaMsg", "A senha nova precisa de 4 caracteres ou mais."); return; }
+  if (a !== b){ ajMsg("#ajSenhaMsg", "As duas senhas novas não são iguais."); return; }
+  c[EU] = { h: hashSenha(EU, a), criado: (c[EU] || {}).criado || "" };
+  if (!gravaContas(c)){ ajMsg("#ajSenhaMsg", "Não consegui gravar a senha neste aparelho."); return; }
+  ["#ajSenhaVelha", "#ajSenhaNova", "#ajSenhaNova2"].forEach(function(s){ $(s).value = ""; });
+  ajMsg("#ajSenhaMsg", "Senha trocada. Use a nova da próxima vez que entrar.", true);
+}
+
+/* E41: escala e tema valem desde a CARGA, antes de qualquer tela -- senao o
+   primeiro enunciado apareceria no tamanho errado e saltaria depois. Aqui, e
+   nao la em cima com os onclick: a ligacao dos botoes vem ANTES destas
+   definicoes no arquivo, e chamar antes de o var atribuir deixa a pagina pela
+   metade -- foi o que aconteceu na primeira tentativa.
+   E antes do DOM existir nao ha problema: a marca sai quieta quando
+   ainda nao achou a caixa. */
+aplicaEscala(escalaAtual());
+aplicaTema(temaAtual());
+
 function pintaConteudo(aberto){
   var d = $("#temasMenu"), b = $("#btConteudo"), s = $("#setaConteudo");
   if (!d || !b) return;
