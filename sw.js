@@ -1,7 +1,7 @@
 /* N1 19-09 -- service worker. Rede primeiro, cache como rede de seguranca.
    Cache-first serviria versao velha depois de um conserto; com prova em 11 dias
    isso e pior que uma ida a rede. */
-var VERSAO = 'n1-b2f18d163276';
+var VERSAO = 'n1-927ac0607123';
 var ESSENCIAIS = ['./', './index.html'].concat(["./imagens__anestesia-geral__mallampati.svg","./imagens__esofago-cirurgico__esofago-tercos-anatomia.svg"]);
 var PRAZO = 3500;
 self.addEventListener('install', function(e){
