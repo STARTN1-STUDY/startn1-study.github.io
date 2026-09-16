@@ -88,12 +88,16 @@ button{font:inherit;cursor:pointer;border-radius:var(--r2);min-height:48px;
    estado depois do toque, e o botao fica aceso como se estivesse selecionado.
    `:active` vale para os dois e da o retorno do toque. */
 @media (hover:hover){
-  button:hover{background:var(--sup2)}
+  /* A regra generica NAO alcanca botao que tem cor propria. Antes alcancava, e
+     o fundo quase branco caia embaixo de um texto branco: o botao sumia. */
+  button:not(.pri):not(.forte):not(.chip):not(.alt):hover{background:var(--sup2)}
   .sec:hover{background:var(--sup2);border-color:var(--bd)}
   .chip:hover{border-color:var(--azul);color:var(--azul2)}
   .chip.pri:hover,.chip.on:hover{background:var(--azul2);border-color:var(--azul2);color:#fff}
-  .pri:hover{filter:brightness(1.06)}
-  footer button:hover{background:var(--sup2);border-color:var(--bd)}
+  /* Escuro fica ESCURO no hover, um tom acima -- e repinta o fundo de proposito,
+     em vez de confiar no `filter`, que nao desfaz o `background` de outra regra. */
+  .pri:hover,footer button.forte:hover{background:var(--azul2);color:#fff}
+  footer button:not(.forte):hover{background:var(--sup2);border-color:var(--bd)}
   .hd .nav:hover{border-color:var(--azul);color:var(--azul2)}
 }
 button:active{transform:translateY(1px)}
@@ -276,6 +280,16 @@ figcaption .cred{opacity:.8}
   <span class="st" id="hQuem"></span>
   <span class="sp"></span>
   <span class="st" id="hProg"></span>
+  <!-- E42: ajuste e ferramenta, nao destino de estudo -- por isso a DIREITA, e
+       nao na lista do menu, onde competia com "Treinar". No cabecalho ele ainda
+       alcanca de dentro da questao, que e onde a pessoa percebe que a letra esta
+       pequena. -->
+  <button id="btAjustes" class="nav eng hide" aria-label="Ajustes" title="Ajustes">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+         stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/>
+    </svg></button>
 </div><div class="barra"><i id="hBarra"></i></div></header>
 
 <style>
@@ -285,22 +299,40 @@ figcaption .cred{opacity:.8}
   color:var(--tx);border-radius:10px;font:inherit;font-size:15px;cursor:pointer;padding:0 10px;margin-right:6px}
 .hd .nav:hover{background:var(--cx2)}
 .hd .nav[disabled]{opacity:.4;cursor:default}
+/* E42: a engrenagem e icone, nao texto -- sem o tamanho e a cor explicitos ela
+   herda o preto do titulo e pesa mais que o nome do app. */
+.hd .eng{display:flex;align-items:center;justify-content:center;padding:0;margin:0 0 0 2px;color:var(--sec)}
+.hd .eng svg{width:18px;height:18px;display:block}
+@media (hover:hover){ .hd .eng:hover{color:var(--azul2)} }
 /* E40.2 -- o grafico da tela inicial. As cores saem das variaveis que JA existem
    (`--azul` e `--verde`). Escrevi `--ok` na primeira versao: variavel inexistente
    nao quebra nada em CSS -- a linha simplesmente nao teria cor, e o grafico sairia
    incompleto passando por todos os portoes. Cor inventada falha em silencio.
    Altura fixa para o cartao nao pular de
    tamanho quando o dado muda; largura fluida. */
-.eixo{display:block;width:100%;height:96px;margin:10px 0 2px;overflow:visible}
-.eixo .bar{fill:var(--azul);opacity:.22}
-.eixo .bar.hoje{opacity:.45}
-.eixo .lin{fill:none;stroke:var(--verde);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-.eixo .pt{fill:var(--verde)}
-.eixo .dia{fill:var(--sec);font-size:9px;text-anchor:middle}
-.eixo .dia.hj{fill:var(--txt);font-weight:700}
 /* E40.3: a frase de tendencia -- o grafico mostra a forma, a frase diz o que
    ela significa, e e a frase que a pessoa repete para si mesma. */
-.tend{font-size:12.5px;color:var(--sec);margin:2px 0 0}
+/* ---- faixa de constancia (E42) ----
+   Um quadradinho por dia, cheio quando houve estudo. E o desenho do Github, do
+   Duolingo e do Anki, pela mesma razao: a pergunta que ele faz ao abrir o app
+   nao e 'qual foi minha media', e 'estou aparecendo todo dia?'. Sem eixo, sem
+   legenda, sem duas escalas brigando -- foi isso que deixou o cartao feio. */
+.faixa{margin:14px 0 0}
+.faixa-cab{display:flex;justify-content:space-between;align-items:baseline;
+  font-size:12px;color:var(--sec);margin:0 0 7px}
+.faixa-cab b{color:var(--txt);font-weight:600}
+.tiras{display:flex;gap:4px}
+.tiras i{flex:1 1 0;height:20px;border-radius:3px;background:var(--sup2);
+  border:1px solid var(--linha);box-sizing:border-box}
+/* quatro tons, nao um degrade continuo: com 14 dias, tom que ninguem distingue
+   e tinta gasta. O vazio fica como caixa, nao como buraco -- dia sem estudo e
+   informacao, e some se eu simplesmente nao desenhar nada. */
+.tiras i.n1{background:var(--verde);border-color:var(--verde);opacity:.3}
+.tiras i.n2{background:var(--verde);border-color:var(--verde);opacity:.55}
+.tiras i.n3{background:var(--verde);border-color:var(--verde);opacity:.78}
+.tiras i.n4{background:var(--verde);border-color:var(--verde)}
+.tiras i.hoje{box-shadow:0 0 0 2px var(--sup),0 0 0 3px var(--sec)}
+.tend{font-size:12.5px;color:var(--sec);margin:9px 0 0}
 .tend b{color:var(--txt)}
 
 /* ---- ajustes (E41) ----
@@ -321,10 +353,6 @@ figcaption .cred{opacity:.8}
 .ajmsg.bom{color:var(--verde)}
 #tAjustes h3{margin:22px 0 2px;font-size:15px}
 #tAjustes h3:first-of-type{margin-top:8px}
-.legenda{display:flex;gap:14px;font-size:12px;color:var(--sec);margin:0 0 2px}
-.legenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-.legenda .lv{background:var(--azul);opacity:.35}
-.legenda .la{background:var(--verde)}
 </style>
 
 <main class="wrap">
@@ -397,7 +425,6 @@ figcaption .cred{opacity:.8}
     <span id="setaConteudo">▸</span> Escolher conteúdo</button>
   <div id="temasMenu" class="hide"></div>
   <p class="sub" id="sincLinha" style="margin-top:14px"></p>
-  <button class="sec" id="btAjustes">Ajustes</button>
   <button class="sec" id="btTrocar">Trocar de pessoa</button>
   <button class="sec hide" id="btAdmin">Quem está usando o app</button>
   <p class="assin">Organizado por Rafael Soares de Araújo, com questões do Revalida, do ENAMED, do ENARE e de provas de faculdades de medicina, nos assuntos da N1 Específica de 19/09.</p>
@@ -1186,6 +1213,9 @@ function mostra(qual, semEmpilhar){
   var voltaParaMenu = (!PILHA.length || PILHA[PILHA.length - 1] === "#tMenu");
   var naRaiz = (qual === "#tMenu");
   $("#btVoltar").className = (dentro && !naRaiz) ? "nav" : "nav hide";
+  /* E42: a engrenagem acompanha toda tela de dentro, menos a propria tela de
+     ajustes -- botao que leva para onde voce ja esta e ruido. */
+  $("#btAjustes").className = (dentro && qual !== "#tAjustes") ? "nav eng" : "nav eng hide";
   $("#btMenu").className = (dentro && !naRaiz && !voltaParaMenu) ? "nav" : "nav hide";
 }
 
@@ -1375,73 +1405,56 @@ function agregaPainel(st, itens){
 }
 function pct(c, f){ return f ? Math.round(100 * c / f) : 0; }
 
-/* E40.2 -- evolucao por dia, em SVG inline. Devolve "" quando nao ha historia
-   suficiente: com menos de 3 dias, duas barras nao sao uma tendencia e desenhar
-   uma seria mentir com estetica. */
-var DIAS_MIN_GRAFICO = 3, DIAS_NO_GRAFICO = 10;
+/* E42 -- a faixa de constancia. Devolve "" com menos de 3 dias de estudo: com
+   dois dias, 'constancia' e uma palavra grande demais para o que se mediu.
+   Sempre 14 quadrados, terminando em HOJE -- a faixa nao encolhe conforme a
+   historia, senao a mesma pessoa veria escalas diferentes a cada semana. */
+var DIAS_MIN_GRAFICO = 3, DIAS_NO_GRAFICO = 14;
 function graficoDias(A){
-  var chaves = Object.keys(A.dias || {}).sort();
-  if (chaves.length < DIAS_MIN_GRAFICO) return "";
-  /* do primeiro dia estudado ate hoje, SEM pular: dia vazio e informacao */
-  var fim = new Date(), ini = new Date(chaves[0] + "T00:00:00");
-  var serie = [], d = new Date(ini);
-  while (d <= fim && serie.length < 400){
-    var k = d.toISOString().slice(0, 10), v = A.dias[k] || { feitos: 0, certos: 0 };
-    /* E40.3: a INICIAL do dia da semana, nao o numero do mes. E o que Duolingo,
-       Apple Fitness e Github fazem: "sexta" se le sem contar, e `17` nao diz
-       nada sozinho. */
-    serie.push({ k: k, feitos: v.feitos, certos: v.certos,
-                 dia: "DSTQQSS".charAt(d.getDay()) });
-    d = new Date(d.getTime() + 86400000);
+  var dias = A.dias || {};
+  if (Object.keys(dias).length < DIAS_MIN_GRAFICO) return "";
+  var hoje = new Date(), serie = [];
+  for (var i = DIAS_NO_GRAFICO - 1; i >= 0; i--){
+    var d = new Date(hoje.getTime() - i * 86400000);
+    var k = d.toISOString().slice(0, 10), v = dias[k] || { feitos: 0, certos: 0 };
+    serie.push({ k: k, feitos: v.feitos, certos: v.certos });
   }
-  serie = serie.slice(-DIAS_NO_GRAFICO);
-  var L = 300, H = 96, pb = 14, pt = 8;             /* area util do desenho */
-  var n = serie.length, larg = L / n, bw = Math.min(26, larg * 0.56);
-  var teto = Math.max.apply(null, serie.map(function(s){ return s.feitos; })) || 1;
-  var barras = "", linha = "", pontos = "", rotulos = "", ultimo = null;
-  serie.forEach(function(s, i){
-    var cx = i * larg + larg / 2;
-    var h = s.feitos ? Math.max(3, (H - pb - pt) * s.feitos / teto) : 0;
-    if (h) barras += '<rect class="bar' + (i === n - 1 ? ' hoje' : '') + '" x="' +
-      (cx - bw / 2).toFixed(1) + '" y="' + (H - pb - h).toFixed(1) +
-      '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="3"/>';
-    if (s.feitos){
-      var y = (H - pb) - (H - pb - pt) * (pct(s.certos, s.feitos) / 100);
-      linha += (ultimo === null ? "M" : "L") + cx.toFixed(1) + " " + y.toFixed(1) + " ";
-      pontos += '<circle class="pt" cx="' + cx.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="2.6"/>';
-      ultimo = i;
-    }
-    /* hoje em negrito: ancora de leitura, para o olho achar o agora */
-    rotulos += '<text class="dia' + (i === n - 1 ? ' hj' : '') + '" x="' +
-      cx.toFixed(1) + '" y="' + (H - 3) + '">' + s.dia + '</text>';
-  });
-  /* G98: o mesmo conteudo em palavras, para quem usa leitor de tela */
+  /* O tom sai de faixas FIXAS de quantidade, nao do teto da propria serie: com
+     teto relativo, 4 questoes ficavam 'cheias' so porque o maximo foi 5 -- era
+     a mentira que deixava a barra enorme num dia fraco. */
+  var nivel = function(q){ return !q ? 0 : (q < 5 ? 1 : (q < 15 ? 2 : (q < 30 ? 3 : 4))); };
+  var tiras = serie.map(function(s, i){
+    var n = nivel(s.feitos);
+    return '<i class="' + (n ? "n" + n : "") +
+           (i === serie.length - 1 ? " hoje" : "") + '"></i>';
+  }).join("");
+
+  /* Sequencia: dias seguidos ate hoje. Se hoje ainda nao teve estudo, conta ate
+     ontem -- senao, abrir o app de manha zeraria uma ofensiva que nao acabou. */
+  var seq = 0, j = serie.length - 1;
+  if (!serie[j].feitos) j--;
+  for (; j >= 0 && serie[j].feitos; j--) seq++;
+
   var comEstudo = serie.filter(function(s){ return s.feitos; });
   var totalQ = comEstudo.reduce(function(a, s){ return a + s.feitos; }, 0);
   var totalC = comEstudo.reduce(function(a, s){ return a + s.certos; }, 0);
-  var rot = "Evolução dos últimos " + n + " dias: " + totalQ + " questões em " +
-    comEstudo.length + (comEstudo.length === 1 ? " dia" : " dias") + " de estudo, " +
-    pct(totalC, totalQ) + "% de acerto no período.";
-  /* E40.3 -- *variance annotation*: compara os 3 ultimos dias com os 3 anteriores.
-     So aparece com os 6 completos; com menos, uma 'tendencia' seria ruido com
-     cara de conclusao. */
-  var frase = "";
-  if (comEstudo.length >= 6){
-    var ult = comEstudo.slice(-3), ant = comEstudo.slice(-6, -3);
-    var somaF = function(a){ return a.reduce(function(x, s){ return x + s.feitos; }, 0); };
-    var somaC = function(a){ return a.reduce(function(x, s){ return x + s.certos; }, 0); };
-    var pu = pct(somaC(ult), somaF(ult)), pa = pct(somaC(ant), somaF(ant)), dif = pu - pa;
-    frase = '<p class="tend">' + (
-      Math.abs(dif) < 3 ? 'Acerto <b>estável</b> nos últimos dias, em <b>' + pu + '%</b>.'
-      : (dif > 0 ? 'Acerto <b>subiu ' + dif + ' pontos</b> nos últimos 3 dias, para <b>' + pu + '%</b>.'
-                 : 'Acerto <b>caiu ' + Math.abs(dif) + ' pontos</b> nos últimos 3 dias, para <b>' + pu + '%</b>.')
-    ) + '</p>';
-  }
-  return '<div class="legenda"><span><i class="lv"></i>questões no dia</span>' +
-    '<span><i class="la"></i>% de acerto</span></div>' +
-    '<svg class="eixo" viewBox="0 0 ' + L + ' ' + H + '" preserveAspectRatio="none" ' +
-    'role="img" aria-label="' + esc(rot) + '">' + barras +
-    (linha ? '<path class="lin" d="' + linha.trim() + '"/>' : "") + pontos + rotulos + '</svg>' + frase;
+  var rot = "Últimos " + DIAS_NO_GRAFICO + " dias: estudo em " + comEstudo.length +
+    (comEstudo.length === 1 ? " dia" : " dias") + ", " + totalQ + " questões, " +
+    pct(totalC, totalQ) + "% de acerto.";
+
+  /* O numero fica; o julgamento sai. A frase anterior abria o app com 'Acerto
+     caiu 12 pontos' sobre 35 questoes de amostra, na semana da prova. */
+  var frase = comEstudo.length
+    ? '<p class="tend"><b>' + totalQ + '</b> quest' + (totalQ === 1 ? "ão" : "ões") +
+      ' nos últimos ' + DIAS_NO_GRAFICO + ' dias · <b>' + pct(totalC, totalQ) +
+      '%</b> de acerto no período.</p>'
+    : "";
+
+  return '<div class="faixa" role="img" aria-label="' + esc(rot) + '">' +
+    '<div class="faixa-cab"><span>Últimos ' + DIAS_NO_GRAFICO + ' dias</span>' +
+    '<span>' + (seq > 1 ? '<b>' + seq + ' dias seguidos</b>'
+                        : (seq === 1 ? "<b>estudou hoje</b>" : "sem estudo hoje")) +
+    '</span></div><div class="tiras">' + tiras + '</div>' + frase + '</div>';
 }
 /* E39.2: tres fontes caem na mesma coluna de "O que voce mais erra" -- o TEMA
    vem do rotulo proprio (maiusculo), o nivel e o foco vem de frases escritas em
