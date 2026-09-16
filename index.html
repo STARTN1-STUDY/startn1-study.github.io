@@ -60,7 +60,10 @@ body{margin:0;padding:0 0 96px;font:16px/1.5 -apple-system,BlinkMacSystemFont,"S
   color:var(--txt);background:var(--sup1);-webkit-text-size-adjust:100%}
 .wrap{max-width:760px;margin:0 auto;padding:0 16px}
 header{position:sticky;top:0;z-index:20;background:var(--sup);border-bottom:1px solid var(--linha)}
-.hd{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+/* E44: o padding da direita guarda o lugar da engrenagem, que sai do fluxo.
+   Sem essa reserva, o contador de progresso passaria por baixo dela. */
+.hd{max-width:760px;margin:0 auto;padding:10px 60px 10px 16px;position:relative;
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .hd b{font-size:15px}
 /* o logo e um link clicavel, entao e alvo de toque como qualquer outro (G78);
    media 36px ate 15/09, achado pelo auditor fora do escopo em que eu media */
@@ -301,7 +304,11 @@ figcaption .cred{opacity:.8}
 .hd .nav[disabled]{opacity:.4;cursor:default}
 /* E42: a engrenagem e icone, nao texto -- sem o tamanho e a cor explicitos ela
    herda o preto do titulo e pesa mais que o nome do app. */
-.hd .eng{display:flex;align-items:center;justify-content:center;padding:0;margin:0 0 0 2px;color:var(--sec)}
+/* E44 -- ancorada no canto superior direito, oposta ao logo, em QUALQUER largura.
+   Medido antes: no fluxo normal ela ia para a segunda linha a 375px (o cabecalho
+   quebra) e aparecia encostada a esquerda -- certa na minha tela, errada na dele. */
+.hd .eng{position:absolute;top:10px;right:16px;margin:0;padding:0;
+  display:flex;align-items:center;justify-content:center;color:var(--sec)}
 .hd .eng svg{width:18px;height:18px;display:block}
 @media (hover:hover){ .hd .eng:hover{color:var(--azul2)} }
 /* E40.2 -- o grafico da tela inicial. As cores saem das variaveis que JA existem
