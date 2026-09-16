@@ -81,7 +81,27 @@ table.adm th{font-weight:600;color:var(--sec)}
 h1{font-size:22px;line-height:1.25;margin:18px 0 6px;letter-spacing:-.3px;font-weight:700}
 h3{font-size:17px;line-height:1.3;margin:22px 0 8px;letter-spacing:-.1px}
 p.sub{color:var(--sec);margin:0 0 18px}
-button{font:inherit;cursor:pointer;border-radius:var(--r2);min-height:48px}
+button{font:inherit;cursor:pointer;border-radius:var(--r2);min-height:48px;
+  transition:background-color .12s ease, border-color .12s ease}
+/* E39.5 -- ele: "coloque os botoes com alguma pequena reacao ao passar o mouse".
+   `:hover` so em quem TEM mouse (`hover:hover`): no celular o navegador prende o
+   estado depois do toque, e o botao fica aceso como se estivesse selecionado.
+   `:active` vale para os dois e da o retorno do toque. */
+@media (hover:hover){
+  button:hover{background:var(--sup2)}
+  .sec:hover{background:var(--sup2);border-color:var(--bd)}
+  .chip:hover{border-color:var(--azul);color:var(--azul2)}
+  .chip.pri:hover,.chip.on:hover{background:var(--azul2);border-color:var(--azul2);color:#fff}
+  .pri:hover{filter:brightness(1.06)}
+  footer button:hover{background:var(--sup2);border-color:var(--bd)}
+  .hd .nav:hover{border-color:var(--azul);color:var(--azul2)}
+}
+button:active{transform:translateY(1px)}
+/* E39.6 -- contraste do botao claro sobre fundo claro, LEVE como ele pediu:
+   a borda dos secundarios sai de `--linha` (#e4e8f0, quase invisivel no branco)
+   para `--bd` (#c3cbd9). E so a borda -- trocar o fundo mudaria a hierarquia da
+   tela inteira, e ele disse "cuidado com isso". */
+.sec,footer button{border-color:var(--bd)}
 .pri{width:100%;background:var(--azul);color:#fff;border:0;padding:14px;font-weight:600;font-size:16.5px;margin-bottom:10px}
 .pri:hover{filter:brightness(1.08)}
 .sec{width:100%;background:var(--sup);color:var(--azul2);border:1.5px solid var(--linha);padding:12px;margin-bottom:10px}
@@ -246,11 +266,26 @@ figcaption .cred{opacity:.8}
 </defs></svg>
 
 <header><div class="hd">
+  <!-- E39.3: a seta e o MENU vivem AQUI, no cabecalho, e valem para toda tela.
+       Antes havia quatro botoes para a mesma ideia (tres "Voltar ao menu" e um
+       "Sair"), e nenhum jeito de voltar UMA tela. Ficam escondidos na entrada,
+       onde nao ha para onde voltar. -->
+  <button id="btVoltar" class="nav hide" aria-label="Voltar à tela anterior" title="Voltar">←</button>
+  <button id="btMenu" class="nav hide" aria-label="Ir para o menu">MENU</button>
   <a class="logo" href="#" id="hTit" aria-label="Start N1, edição 2026.2"><svg aria-hidden="true"><use href="#lg"></use></svg><b>Start N1</b><span class="ed">2026.2</span></a>
   <span class="st" id="hQuem"></span>
   <span class="sp"></span>
   <span class="st" id="hProg"></span>
 </div><div class="barra"><i id="hBarra"></i></div></header>
+
+<style>
+/* E39.3: alvo de toque de 44px como todo o resto (G78); o MENU e texto curto
+   de proposito -- icone sozinho obriga a adivinhar. */
+.hd .nav{min-height:44px;min-width:44px;border:1px solid var(--bd);background:var(--cx);
+  color:var(--tx);border-radius:10px;font:inherit;font-size:15px;cursor:pointer;padding:0 10px;margin-right:6px}
+.hd .nav:hover{background:var(--cx2)}
+.hd .nav[disabled]{opacity:.4;cursor:default}
+</style>
 
 <main class="wrap">
 
@@ -314,7 +349,13 @@ figcaption .cred{opacity:.8}
   <button class="pri" id="btTreino">Treinar pelo banco</button>
   <button class="pri" id="btSimulado">Fazer um simulado (20 itens · 1h20)</button>
   <button class="sec" id="btRetomar">Retomar simulado em andamento</button>
-  <div id="temasMenu"></div>
+  <!-- E39.7 -- ele: "Pagina inicial, todos os temas dispostos, poderiam estar
+       escondidos por uma setinha. Tu abre, aparece todos os conteudos do nada...
+       Acho meio desorganizado." Fechado por padrao; o estado fica no navegador,
+       entao quem gosta de ver tudo aberto abre uma vez so. -->
+  <button id="btConteudo" class="sec" aria-expanded="false" aria-controls="temasMenu">
+    <span id="setaConteudo">▸</span> Escolher conteúdo</button>
+  <div id="temasMenu" class="hide"></div>
   <p class="sub" id="sincLinha" style="margin-top:14px"></p>
   <button class="sec" id="btTrocar">Trocar de pessoa</button>
   <button class="sec hide" id="btAdmin">Quem está usando o app</button>
@@ -332,13 +373,13 @@ figcaption .cred{opacity:.8}
     <p class="sub" id="limTel" style="margin:10px 0 0;text-align:center"></p>
     <p class="sub" id="limConta" style="margin:14px 0 0;text-align:center"></p>
   </div>
-  <button class="sec" id="btVoltarLimite">Voltar ao menu</button>
+  <!-- E39.3: o "Voltar ao menu" desta tela saiu; o cabecalho faz o papel -->
 </section>
 <section id="tAdmin" class="hide">
   <h1>Quem está usando o app</h1>
   <p class="sub" id="adResumo">Lista vinda do servidor: pessoas, acessos e atividade.</p>
   <div id="adLista"></div>
-  <button class="sec" id="btVoltarAdmin">Voltar ao menu</button>
+  <!-- E39.3: o "Voltar ao menu" desta tela saiu; o cabecalho faz o papel -->
 </section>
 <section id="tPainel" class="hide">
   <h1>Meu progresso</h1>
@@ -353,7 +394,7 @@ figcaption .cred{opacity:.8}
   <div id="pnDias" class="dias"></div>
   <h3>Simulados</h3>
   <div id="pnSims"></div>
-  <button class="sec" id="btVoltarPainel">Voltar ao menu</button>
+  <!-- E39.3: o "Voltar ao menu" desta tela saiu; o cabecalho faz o papel -->
 </section>
 
 <section id="tQuest" class="hide">
@@ -382,9 +423,11 @@ figcaption .cred{opacity:.8}
 
 <footer><div class="in">
   <span class="st" id="status"></span>
+  <!-- E39.4: Anterior fica DESABILITADO na primeira questao em vez de sumir --
+       botao que aparece e desaparece confunde mais que botao apagado. -->
+  <button id="btAnt">Anterior</button>
   <button id="btPular">Pular</button>
   <button id="btProx" class="forte">Próxima</button>
-  <button id="btSair">Sair</button>
 </div></footer>
 
 <script>
@@ -1003,13 +1046,50 @@ function entra(nome){
    #tAdmin foi criado e ninguem lembrou de acrescenta-lo aqui, entao o painel
    do organizador escondia tudo e nao mostrava nada. Tela nova agora entra
    sozinha (portao G76b). */
-function mostra(qual){
+/* E39.3 -- PILHA de navegacao. A alternativa era um `if` por tela ("se estou
+   no painel, volto ao menu"), e e assim que nasce a quinta variante: cada tela
+   nova obriga a lembrar do caso. Aqui `mostra()` registra sozinha, e a seta
+   funciona para tela que ainda nem foi escrita. */
+var PILHA = [];
+function podeSair(){
+  /* o `Sair` tinha esta confirmacao e ela nao se perde: o relogio do simulado
+     continua correndo, e perder prova por descuido e pior que um clique a mais */
+  return !(MODO === "simulado" &&
+           !confirm("O simulado continua contando o tempo. Sair mesmo?"));
+}
+function voltar(){
+  if (!PILHA.length) { if (podeSair()){ mostra("#tMenu", true); menu(); } return; }
+  if (!podeSair()) return;
+  var alvo = PILHA.pop();
+  mostra(alvo, true);
+  if (alvo === "#tMenu") menu();
+}
+function mostra(qual, semEmpilhar){
+  var atual = null;
+  Array.prototype.forEach.call(document.querySelectorAll("section[id]"), function(el){
+    if (el.className !== "hide") atual = "#" + el.id;
+  });
+  if (!semEmpilhar && atual && atual !== qual && qual !== "#tEntrada"){
+    PILHA.push(atual);
+    if (PILHA.length > 20) PILHA.shift();   /* nao cresce sem fim */
+  }
+  if (qual === "#tMenu") PILHA.length = 0;  /* o menu e a raiz */
   Array.prototype.forEach.call(document.querySelectorAll("section[id]"), function(el){
     el.className = ("#" + el.id === qual) ? "" : "hide";
   });
   var rodape = (qual === "#tQuest");
   $("#btPular").className = rodape ? "" : "hide";
   $("#btProx").className = rodape ? "forte" : "hide";
+  $("#btAnt").className = rodape ? "" : "hide";
+  if (rodape) $("#btAnt").disabled = (POS <= 0);
+  /* Antes do login nao ha para onde voltar nem menu para ir. Medido no navegador:
+     a tela inicial e `#tCriar`, nao `#tEntrada` -- eu tinha escrito a condicao com
+     UMA tela na mao e a navegacao apareceu na criacao de conta. O criterio certo
+     nao e QUAL tela e sim se ja HA usuario: vale para toda tela de antes do login,
+     inclusive as que ainda nao existem (mesma razao do G76b). */
+  var dentro = !!EU;
+  $("#btMenu").className = dentro ? "nav" : "nav hide";
+  $("#btVoltar").className = (dentro && qual !== "#tMenu") ? "nav" : "nav hide";
 }
 
 /* ================= menu ================= */
@@ -1081,7 +1161,7 @@ function menu(){
     tm.appendChild(bf);
   }
   /* temas, com o feito/total de cada um */
-  tm = $("#temasMenu"); tm.innerHTML = "<p class=\"sub\" style=\"margin:16px 0 6px\">Ou treine um tema:</p>";
+  tm = $("#temasMenu"); tm.innerHTML = "";
   DADOS.temas.forEach(function(t){
     var lista = porTema(t), n = lista.length; if (!n) return;
     var feitos = lista.filter(function(i){ return ST.resp[i.id]; }).length;
@@ -1092,6 +1172,9 @@ function menu(){
     tm.appendChild(b);
   });
   var anul = ITENS.filter(function(i){ return i.parecer === "anulada"; });
+  /* E39.7: fechado por padrao; aberto se ele ja escolheu assim antes */
+  try { pintaConteudo(localStorage.getItem("n1:conteudo") === "1"); }
+  catch(e){ pintaConteudo(false); }
   if (anul.length){
     var ba = document.createElement("button");
     ba.className = "chip"; ba.id = "chipAnuladas";
@@ -1191,6 +1274,14 @@ function agregaPainel(st, itens){
   return out;
 }
 function pct(c, f){ return f ? Math.round(100 * c / f) : 0; }
+/* E39.2: tres fontes caem na mesma coluna de "O que voce mais erra" -- o TEMA
+   vem do rotulo proprio (maiusculo), o nivel e o foco vem de frases escritas em
+   minuscula. A coluna saia desalinhada. Capitalizo na montagem em vez de
+   reescrever os dicionarios: o subtitulo de cada linha ja diz de onde vem. */
+function maiuscula1(s){
+  s = String(s || "");
+  return s ? s.charAt(0).toLocaleUpperCase("pt-BR") + s.slice(1) : s;
+}
 function classeTaxa(p){ return p < 50 ? "ruim" : (p < 75 ? "meio" : ""); }
 var ROT_NIVEL = { raciocinio: "questões de raciocínio", enamed: "estilo ENAMED", definicao: "questões de definição" };
 
@@ -1226,7 +1317,7 @@ function pintaPainel(){
   var naoTocados = (DADOS.temas || []).filter(function(t){ return !A.temas[t]; });
   $("#pnTemas").innerHTML = (temas.length ? temas.map(function(x){
     return "<div class=\"pn-barra " + classeTaxa(x.p) + "\"><div><div class=\"rot\"><span>" + esc(R[x.t] || x.t) +
-      "</span><small>" + x.g.certos + "/" + x.g.feitos + "</small></div><div class=\"tr\"><i style=\"width:" + x.p + "%\"></i></div></div>" +
+      "</span><small>" + x.g.certos + " de " + x.g.feitos + " certas</small></div><div class=\"tr\"><i style=\"width:" + x.p + "%\"></i></div></div>" +
       "<div class=\"pct\">" + x.p + "%</div></div>";
   }).join("") : "<p class=\"vazio\">Nenhum tema respondido ainda.</p>") +
   (naoTocados.length ? "<p class=\"vazio\">Ainda não tocados: " + naoTocados.map(function(t){ return esc(R[t] || t); }).join(", ") + ".</p>" : "");
@@ -1242,7 +1333,8 @@ function pintaPainel(){
   linhas.slice(0, 8).forEach(function(l){
     var b = document.createElement("button"); b.className = "erro"; b.type = "button";
     b.setAttribute("data-ids", l.g.erradosIds.join(","));
-    b.innerHTML = "<span>" + esc(l.rot) + "<small>" + esc(l.sub) + " · " + l.g.certos + " de " + l.g.feitos + " certas</small></span>" +
+    /* E39.2: a coluna mistura tema (maiusculo), nivel e foco (minusculos) */
+    b.innerHTML = "<span>" + esc(maiuscula1(l.rot)) + "<small>" + esc(l.sub) + " · " + l.g.certos + " de " + l.g.feitos + " certas</small></span>" +
                   "<b>" + l.g.erradosIds.length + " erro" + (l.g.erradosIds.length === 1 ? "" : "s") + " →</b>";
     b.onclick = function(){ iniciaTreinoIds(l.g.erradosIds.slice(), "Só o que errei em: " + l.rot); };
     pe.appendChild(b);
@@ -1348,6 +1440,12 @@ function pinta(){
   var jaRespondeu = (MODO === "revisao") ||
                     !!(idAgora && ST && ST.resp && ST.resp[idAgora]);
   if (!jaRespondeu && estouroLimite()){ telaLimite(); return; }
+  /* E39.4: DEPOIS da trava, de proposito. Eu tinha posto antes e o G86 acusou --
+     com razao: a trava e a primeira coisa de `pinta()`, e mexer no DOM antes dela
+     e comecar a montar uma tela que a pessoa nao pode ver. Medido no navegador:
+     `mostra()` roda uma vez ao abrir o treino, entao sem esta linha o botao ficava
+     desabilitado para sempre, mesmo na terceira questao. */
+  { var _ba = $("#btAnt"); if (_ba) _ba.disabled = (POS <= 0); }
   var id = idAgora;
   if (!id){ if (MODO === "simulado") fechaSimulado(false); else fimTreino(); return; }
   ATUAL = PORID[id];
@@ -1851,7 +1949,7 @@ function telaLimite(){
   mostra("#tLimite");
   window.scrollTo(0, 0);
 }
-$("#btVoltarLimite").onclick = function(){ mostra("#tMenu"); menu(); };
+/* E39.3: os tres "Voltar ao menu" viraram o MENU do cabecalho */
 
 function ehOrganizador(){ return !!EU && String(EU).trim().toLowerCase().split(" ")[0] === ADMIN_NOME; }
 function abreAdmin(){
@@ -1904,15 +2002,34 @@ function dataCurta(s){
   return isNaN(d.getTime()) ? String(s) : d.toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
 }
 $("#btAdmin").onclick = abreAdmin;
-$("#btVoltarAdmin").onclick = function(){ mostra("#tMenu"); menu(); };
-$("#btVoltarPainel").onclick = function(){ mostra("#tMenu"); menu(); };
+
+
 $("#btVoltaMenu").onclick = function(){ mostra("#tMenu"); menu(); };
-$("#btPular").onclick = function(){ POS++; pinta(); };
-$("#btProx").onclick = function(){ POS++; pinta(); };
-$("#btSair").onclick = function(){
-  if (MODO === "simulado" && !confirm("O simulado continua contando o tempo. Sair mesmo?")) return;
-  mostra("#tMenu"); menu();
+/* E39.7: abrir e fechar a lista de temas. O estado vive no navegador -- quem
+   prefere ver tudo aberto abre uma vez, nao toda vez. `localStorage` pode
+   lancar (janela anonima, cookies bloqueados), e ai o padrao vale. */
+function pintaConteudo(aberto){
+  var d = $("#temasMenu"), b = $("#btConteudo"), s = $("#setaConteudo");
+  if (!d || !b) return;
+  d.className = aberto ? "" : "hide";
+  b.setAttribute("aria-expanded", aberto ? "true" : "false");
+  if (s) s.textContent = aberto ? "▾" : "▸";
+  try { localStorage.setItem("n1:conteudo", aberto ? "1" : "0"); } catch(e){}
+}
+if ($("#btConteudo")) $("#btConteudo").onclick = function(){
+  pintaConteudo($("#temasMenu").className === "hide");
 };
+$("#btPular").onclick = function(){ POS++; pinta(); };
+/* E39.4: voltar e REVER, e rever nao gasta cota -- a isencao ja existe desde a
+   V16-4, e `pinta()` a respeita porque a questao anterior ja foi respondida. */
+$("#btAnt").onclick = function(){ if (POS > 0){ POS--; pinta(); } };
+$("#btVoltar").onclick = voltar;
+$("#btMenu").onclick = function(){ if (podeSair()){ mostra("#tMenu", true); menu(); } };
+$("#btProx").onclick = function(){ POS++; pinta(); };
+/* E39.3: o `Sair` saiu do rodape e o handler foi junto. Deixa-lo aqui seria
+   `null.onclick`, que derruba o script inteiro na carga -- tela branca, nao
+   botao a mais. A confirmacao do simulado que ele fazia vive em `podeSair()`,
+   usada pela seta e pelo MENU. */
 
 /* ================= arranque ================= */
 if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
