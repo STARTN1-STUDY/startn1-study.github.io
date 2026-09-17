@@ -451,6 +451,10 @@ figcaption .cred{opacity:.8}
     <div class="box" id="limPago" style="margin:0 0 16px"></div>
     <a class="pri" id="limZap" href="#" style="display:flex;align-items:center;justify-content:center;text-decoration:none">Falar com o Rafael no WhatsApp</a>
     <p class="sub" id="limTel" style="margin:10px 0 0;text-align:center"></p>
+      <!-- E45: sem isto, quem foi liberado depois de ver esta tela dependia de
+         adivinhar que era so recarregar a pagina. -->
+    <button class="sec" id="btLimRever" style="margin-top:14px">Já fui liberado — conferir de novo</button>
+    <p class="sub" id="limRevMsg" style="margin:6px 0 0;text-align:center"></p>
     <p class="sub" id="limConta" style="margin:14px 0 0;text-align:center"></p>
   </div>
   <!-- E39.3: o "Voltar ao menu" desta tela saiu; o cabecalho faz o papel -->
@@ -2086,10 +2090,20 @@ var ADMIN_NOME = "rafael";
    NOME, a planilha soma tudo, e limpar o navegador nao devolve questao nenhuma.
    Foi a troca que eu escolhi na V15-1 -- errar para o lado de deixar passar --
    e o comentario tem de dizer a verdade sobre ela. */
-var LIM = { limite: 20, usadas: 0, liberado: false, telefone: "+55 77 99852-0842",
+var LIM = { limite: 20, usadas: 0, liberado: false, respondeu: false, telefone: "+55 77 99852-0842",
             motivo: "As questões de teste foram essas. Se quiser continuar, por favor, entre em contato com Rafael." };
 function guardaLimite(j){
   if (!j) return;
+  /* E45 -- a liberacao tem de CHEGAR. Antes, uma recusa desligava a sincronia
+     (`telaLimite`), e a sincronia era a unica porta por onde a noticia da
+     liberacao entraria: a pessoa liberada no servidor continuava presa para
+     sempre. Foi o que aconteceu com duas colegas dele em 16/09. */
+  if (j.liberado === true){
+    LIM.liberado = true;
+    SINC.ligada = !!API;
+    if ($("#tLimite") && !$("#tLimite").className){ mostra("#tMenu", true); menu(); }
+  }
+  LIM.respondeu = true;
   if (typeof j.limite === "number") LIM.limite = j.limite;
   if (typeof j.usadas === "number") LIM.usadas = Math.max(LIM.usadas, j.usadas);
   if (typeof j.liberado === "boolean") LIM.liberado = j.liberado;
@@ -2102,6 +2116,10 @@ function guardaLimite(j){
 function usadasAqui(){ return (ST && ST.resp) ? Object.keys(ST.resp).length : 0; }
 function estouroLimite(){
   if (LIM.liberado) return false;
+  /* E45 -- com servidor, quem decide e ele. Enquanto a primeira resposta desta
+     carga nao chegou, o app nao trava por conta propria: travar antes disparava
+     `telaLimite()`, que desligava a sincronia e matava a resposta a caminho. */
+  if (API && !LIM.respondeu) return false;
   return Math.max(usadasAqui(), LIM.usadas) >= LIM.limite;
 }
 function telaLimite(){
@@ -2358,6 +2376,20 @@ $("#btPular").onclick = function(){ POS++; pinta(); };
 /* E39.4: voltar e REVER, e rever nao gasta cota -- a isencao ja existe desde a
    V16-4, e `pinta()` a respeita porque a questao anterior ja foi respondida. */
 $("#btAnt").onclick = function(){ if (POS > 0){ POS--; pinta(); } };
+/* E45 -- pergunta de novo ao servidor, aqui e agora. Religa a sincronia antes:
+   `puxa()` devolve na cara se ela estiver desligada, e foi a propria tela de
+   limite que a desligou. */
+$("#btLimRever").onclick = function(){
+  var m = $("#limRevMsg");
+  if (!API){ m.textContent = "Este app está sem servidor configurado."; return; }
+  m.textContent = "Conferindo…";
+  SINC.ligada = true;
+  puxa(function(deu){
+    if (LIM.liberado) return;   /* guardaLimite ja levou a pessoa ao menu */
+    m.textContent = deu ? "Ainda não consta liberação para você. Fale com o Rafael."
+                        : "Não consegui falar com o servidor agora. Tente daqui a pouco.";
+  });
+};
 $("#btVoltar").onclick = voltar;
 $("#btMenu").onclick = function(){ if (podeSair()){ mostra("#tMenu", true); menu(); } };
 $("#btProx").onclick = function(){ POS++; pinta(); };
